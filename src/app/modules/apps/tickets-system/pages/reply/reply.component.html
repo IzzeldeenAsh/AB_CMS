@@ -1,0 +1,199 @@
+<div class="card card-xxl-stretch mb-5 mb-xl-8">
+  <!-- Header -->
+  <div class="card-header border-0 pt-5">
+    <h3 class="card-title align-items-start flex-column">
+      <span class="card-label fw-bolder fs-3 mb-1">Users List</span>
+      <span class="text-muted mt-1 fw-bold fs-7" *ngIf="usersList.length > 0">{{usersList.length}} members</span>
+    </h3>
+    <div class="card-toolbar">
+      <a (click)="openModal(content)" class="btn btn-sm btn-light-primary">
+        <span class="svg-icon svg-icon-3"></span>
+        New Member
+      </a>
+    </div>
+  </div>
+  
+  <!-- Body -->
+  <div class="card-body py-3">
+    <div class="table-responsive">
+      <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+        <!-- Table head -->
+        <thead>
+          <tr class="fw-bolder text-muted">
+            <th class="min-w-150px">User</th>
+            <th class="min-w-140px">Email</th>
+            <th class="min-w-120px">Permissions</th>
+            <th class="min-w-100px text-start">Actions</th>
+          </tr>
+        </thead>
+        
+        <!-- Table body -->
+        <tbody>
+          <ng-container *ngIf="usersList.length > 0; else loading">
+            <tr *ngFor="let user of usersList">
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="symbol symbol-45px me-5">
+                    <img [src]="user.pic" alt="img" />
+                  </div>
+                  <div class="d-flex justify-content-start flex-column">
+                    <div class="text-gray-900 fw-bolder text-hover-primary fs-6">
+                      {{user.firstname}} {{user.lastname}}
+                    </div>
+                    <span class="text-muted fw-bold text-muted d-block fs-7">
+                      {{user.role}}
+                    </span>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                  {{user.email}}
+                </div>
+              </td>
+              <td class="text-start">
+                <div class="d-flex flex-column w-100 me-2">
+                  <div class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                    {{user.role}}
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex justify-content-start flex-shrink-0">
+              
+                  <a
+                  (click)="editUser(user.id)"
+                    class="
+                      btn btn-icon btn-bg-light btn-active-color-success btn-sm
+                      me-1
+                    "
+                  >
+                    <span
+                      [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                      class="svg-icon svg-icon-3"
+                    ></span>
+                  </a>
+                  <a
+                   (click)="deleteUser(user.id)"
+                    class="
+                      btn btn-icon btn-bg-light btn-active-color-danger btn-sm
+                    "
+                  >
+                    <span
+                      [inlineSVG]="
+                        './assets/media/icons/duotune/general/gen027.svg'
+                      "
+                      class="svg-icon svg-icon-3"
+                    ></span>
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-template #loading>
+            <tr>
+              <td colspan="4" class="text-center">Loading users...</td>
+            </tr>
+          </ng-template>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">{{ isEditMode ? 'Edit Member' : 'Add Member' }}</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form class="form w-100" novalidate="novalidate" [formGroup]="registrationForm" (ngSubmit)="submit()">
+      
+      <ng-container *ngIf="hasError">
+        <div class="mb-lg-15 alert alert-danger">
+          <div class="alert-text font-weight-bold">
+            The registration details are incorrect
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="fv-row mb-8">
+        <label class="form-label fw-bolder text-gray-900 fs-6">First Name</label>
+        <input class="form-control bg-transparent" type="text" placeholder="First Name" formControlName="firstname" autocomplete="off" />
+      </div>
+
+      <div class="fv-row mb-8">
+        <label class="form-label fw-bolder text-gray-900 fs-6">Last Name</label>
+        <input class="form-control bg-transparent" type="text" placeholder="Last Name" formControlName="lastname" autocomplete="off" />
+      </div>
+
+      <div class="fv-row mb-8">
+        <label class="form-label fw-bolder text-gray-900 fs-6">Email</label>
+        <input (change)="resetError()" class="form-control bg-transparent" type="email" placeholder="Email" formControlName="email" autocomplete="off" />
+        <div class="text-danger">{{existedEmailError}}</div>
+      </div>
+
+      <div class="fv-row mb-8 position-relative" *ngIf="!isEditMode">
+        <label class="form-label fw-bolder text-gray-900 fs-6">Password</label>
+        <input
+          [type]="passwordFieldType"
+          class="form-control bg-transparent"
+          placeholder="Password"
+          formControlName="password"
+          autocomplete="off"
+        />
+        <button
+          type="button"
+          class="btn btn-link position-absolute translate-middle-y" style="top: 48px; right: 10px;"
+          (click)="togglePasswordVisibility()"
+        >
+          <i [ngClass]="passwordFieldType === 'password' ? 'bi bi-eye' : 'bi bi-eye-slash'" style="font-size: 20px;"></i>
+        </button>
+      </div>
+      
+      <div class="fv-row mb-8">
+        <label class="form-label fw-bolder text-gray-900 fs-6">Role</label>
+        <select class="form-control bg-transparent" formControlName="role">
+          <option value="" disabled selected>Select Role</option>
+          <option value="SUPER ADMIN">Super Admin</option>
+          <option value="ADMIN">Admin</option>
+          <option value="CONTENT">Content</option>
+          <option value="WRITER">Writer</option>
+          <option value="HR">HR</option>
+          <option value="CONSULTANT">Consultant</option>
+          <option value="DEVELOPER">Developer</option>
+          <option value="GUIEST">Guiest</option>
+        </select>
+      </div>
+
+      <div class="fv-row mb-8">
+        <label class="form-label fw-bolder text-gray-900 fs-6">Upload Picture (190px X 190px)</label>
+        <input class="form-control bg-transparent" type="file" (change)="onFileSelected($event)" />
+        <div class="text-danger" *ngIf="errorMessage"> {{errorMessage}}</div>
+      </div>
+
+      <div class="fv-row mb-8" *ngIf="previewUrl">
+        <img [src]="previewUrl" alt="Image Preview" style="max-width: 100%; height: auto;" />
+      </div>
+   
+      <div class="d-grid mb-10">
+        <button type="submit" class="btn btn-primary" [disabled]="errorMessage || registrationForm.invalid || existedEmailError">
+          <ng-container *ngIf="(isLoading$ | async) === false">
+            <span class="indicator-label">{{ isEditMode ? 'Update' : 'Submit' }}</span>
+          </ng-container>
+          <ng-container *ngIf="isLoading$ | async">
+            <span class="indicator-progress" [style.display]="'block'">
+              Please wait...
+              <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+            </span>
+          </ng-container>
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
