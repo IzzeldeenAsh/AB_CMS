@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'environment';
 import { BehaviorSubject, finalize, Observable } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { abUser } from 'src/app/modules/auth/models/abUser.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'

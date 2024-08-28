@@ -15,7 +15,7 @@ import { environment } from 'src/environments/environment';
 import { FakeAPIService } from './_fake/fake-api.service';
 import { JwtInterceptor } from './services/interceptors/jwt.service';
 // #fake-end#
-
+import { EditorModule , TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 function appInitializer(authService: AuthService) {
   return () => {
     return new Promise((resolve) => {
@@ -32,6 +32,7 @@ function appInitializer(authService: AuthService) {
     BrowserAnimationsModule,
     TranslateModule.forRoot(),
     HttpClientModule,
+    EditorModule,
     ClipboardModule,
     // #fake-start#
     environment.isMockEnabled
@@ -46,6 +47,9 @@ function appInitializer(authService: AuthService) {
     NgbModule,
   ],
   providers: [
+    {
+      provide : TINYMCE_SCRIPT_SRC , useValue :'tinymce/tinymce.min.js'
+    },
     {
       provide: APP_INITIALIZER,
       useFactory: appInitializer,

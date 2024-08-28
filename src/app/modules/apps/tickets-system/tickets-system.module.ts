@@ -14,10 +14,16 @@ import { RepliesComponent } from "./components/replies/replies.component";
 import { TextFormattingComponent } from "./components/text-formatting/text-formatting.component";
 import { NgbTooltipModule } from "@ng-bootstrap/ng-bootstrap";
 import { ReplyComponent } from "./pages/reply/reply.component";
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { EmailsSettingsComponent } from "./pages/email-settings/emails-settings.component";
 import { SharedModule } from "src/app/_metronic/shared/shared.module";
-
+import { AllSectorsComponent } from "./pages/main/all-sectors/all-sectors.component";
+import { TrancateModule } from "src/app/pipes/trancate/trancate.module";
+import { CreateUpdateSectorComponent } from "./pages/main/create-sector/create-update-sector.component";
+import { EditorModule , TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
+import { HttpClientModule } from "@angular/common/http";
+import { NgSelectModule } from '@ng-select/ng-select';
+import { TagInputModule } from 'ngx-chips';
 @NgModule({
   declarations: [
     TicketsSystemComponent,
@@ -28,19 +34,33 @@ import { SharedModule } from "src/app/_metronic/shared/shared.module";
     QuestionsComponent,
     QuestionsListComponent,
     RepliesComponent,
+    AllSectorsComponent,
     TextFormattingComponent,
+    CreateUpdateSectorComponent,
     ReplyComponent,
     EmailsSettingsComponent
   ],
   imports: [
     CommonModule,
     TicketsSystemRoutingModule,
+    EditorModule,
+    HttpClientModule,
+    EditorModule,
+    FormsModule,
     DropdownMenusModule,
     CardsModule,
+    TagInputModule,
+    NgSelectModule,
+    TrancateModule,
     InlineSVGModule,
     ReactiveFormsModule,
     SharedModule,
     NgbTooltipModule,
   ],
+  providers:[
+    {
+      provide : TINYMCE_SCRIPT_SRC , useValue :'tinymce/tinymce.min.js'
+    }
+  ]
 })
 export class TicketsSystemModule {}

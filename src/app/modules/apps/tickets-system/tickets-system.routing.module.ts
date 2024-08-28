@@ -8,6 +8,8 @@ import { SearchComponent } from "./pages/search/search.component";
 import { TagComponent } from "./pages/tag/tag.component";
 import { ReplyComponent } from "./pages/reply/reply.component";
 import { EmailsSettingsComponent } from "./pages/email-settings/emails-settings.component";
+import { AllSectorsComponent } from "./pages/main/all-sectors/all-sectors.component";
+import { CreateUpdateSectorComponent } from "./pages/main/create-sector/create-update-sector.component";
 
 const routes: Routes = [
   {
@@ -17,6 +19,12 @@ const routes: Routes = [
       {
         path: "sectors",
         component: MainComponent,
+        children:[
+        {path :"", redirectTo:"all-sectors"  , pathMatch:"full"},
+        {path :"all-sectors",  component: AllSectorsComponent},
+        {path :"create-sector",  component: CreateUpdateSectorComponent},
+        {path :"create-sector/:id",  component: CreateUpdateSectorComponent}
+        ]
       },
       {
         path: "services",

@@ -8,7 +8,6 @@
 // Components
 @import "./core/components/components";
 @import "components/components";
-
 // Layout
 @import "layout/layout";
 .swal2-styled.swal2-confirm{
@@ -16,4 +15,40 @@
 }
 .swal2-styled.swal2-confirm:focus{
     box-shadow: none !important;
+}
+.custom-ng-select {
+    
+  
+    
+    .ng-option {
+      padding: 10px 15px; /* Padding for each option */
+      color: #333; /* Text color */
+      &:hover {
+        background-color: #e0e0e0; /* Background color on hover */
+      }
+    }
+  
+    .ng-value{
+      background-color: #0275d8;
+      padding: 6px 10px;
+      border-radius: 8px;
+      margin: 0 2px;
+      color: #fff;
+      margin: 4px;
+    }
+
+   
+  
+    .ng-select-search {
+      border-bottom: 1px solid #ccc; /* Border for the search input */
+      padding: 5px; /* Padding inside the search input */
+    }
+  }
+  .ng-dropdown-panel-items{
+    background-color:#f7f7f7 !important ;
+  }
+.ng-dropdown-panel{
+  box-shadow: 5px 9px 11px rgb(159 159 159 / 40%);
+  border-radius: 10px;
+  overflow: hidden;
 }

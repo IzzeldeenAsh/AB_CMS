@@ -1,0 +1,219 @@
+<div class="d-flex flex-column mb-10">
+    <h1 class="d-flex align-items-center my-1">
+        <span class="text-gray-900 fw-bolder fs-1">Create Sector</span>
+    </h1>
+    <a [routerLink]="['/']" routerLinkActive="router-link-active" class="fs-6 pointer" [style.color]="'#1B84FF'">Documentation</a>
+</div>
+
+<form [formGroup]="createSectorForm" id="kt_devs_ask_form" (ngSubmit)="onSubmit()" class="form">
+    <!-- Upload Header Image -->
+    <div class="row align-items-center mb-8">
+        <div class="col-12 col-sm-6">
+            <label class="form-label fw-bolder text-gray-900 fs-6">Upload Header Picture (2000px x 820px) (400kb) (.webp)</label>
+            <input class="form-control bg-transparent" type="file" (change)="onFileSelected($event)" />
+            <div class="text-danger" *ngIf="errorMessage">{{errorMessage}}</div>
+        </div>
+        <div class="col-12 col-sm-6 d-flex flex-row gap-2 pt-1">
+            <div>
+                <label class="form-check form-check-sm form-check-custom form-check-solid">
+                    <input class="form-check-input" type="radio" formControlName="breadColor" value="light" />
+                    <span class="form-check-label text-gray-900">Light Title (for dark backgrounds)</span>
+                </label>
+            </div>
+            <div>
+                <label class="form-check form-check-sm form-check-custom form-check-solid">
+                    <input class="form-check-input" type="radio" formControlName="breadColor" value="dark" />
+                    <span class="form-check-label text-gray-900">Dark Title (for light backgrounds)</span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="fv-row mb-8 image-preview" *ngIf="previewUrl">
+        <div class="col-12 col-sm-6">
+            <img [src]="previewUrl" alt="Image Preview" style="max-width: 100%; height: auto;" />
+        </div>
+    </div>
+
+    <!-- Title -->
+    <div class="row">
+        <div class="col-lg-6 col-12">
+            <div class="d-flex flex-column fv-row">
+                <label class="d-flex align-items-center mb-2">
+                    <span class="text-gray-700 fs-6 fw-bolder required">English Title</span>
+                    <i class="fas fa-exclamation-circle ms-2 fs-7" ngbTooltip="Specify your sector's English title"></i>
+                </label>
+                <input type="text" class="form-control" formControlName="englishTitle" placeholder="Sector English title" />
+                <div *ngIf="isFieldInvalid('englishTitle')" class="text-danger">
+                    English title is required.
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-12">
+            <div class="d-flex flex-column mb-8 fv-row">
+                <label class="d-flex align-items-center mb-2">
+                    <span class="text-gray-700 fs-6 fw-bolder required">Arabic Title</span>
+                    <i class="fas fa-exclamation-circle ms-2 fs-7" ngbTooltip="Specify your sector's Arabic title"></i>
+                </label>
+                <input type="text" class="form-control" formControlName="arabicTitle" placeholder="Sector Arabic title" />
+                <div *ngIf="isFieldInvalid('arabicTitle')" class="text-danger">
+                    Arabic title is required.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sector's Short -->
+    <div class="row">
+        <div class="col-lg-6 col-12">
+            <div class="d-flex flex-column mb-8">
+                <label class="mb-2">
+                    <span class="text-gray-700 fs-6 fw-bolder required">Sector's short (English)</span>
+                    <i class="fas fa-exclamation-circle ms-2 fs-7" ngbTooltip="This is the text in the banner right underneath the title (MAX 170 characters)"></i>
+                </label>
+                <div class="fv-row">
+                    <textarea formControlName="englishShort" class="form-control mb-3" rows="10" placeholder="Please add sectors short/teaser English"></textarea>
+                    <div *ngIf="isFieldInvalid('englishShort')" class="text-danger">
+                        English short description is required and cannot exceed 170 characters.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-12">
+            <div class="d-flex flex-column">
+                <label class="mb-2">
+                    <span class="text-gray-700 fs-6 fw-bolder required">Sector's short (Arabic)</span>
+                    <i class="fas fa-exclamation-circle ms-2 fs-7" ngbTooltip="This is the text in the banner right underneath the title (MAX 170 characters)"></i>
+                </label>
+                <div class="fv-row">
+                    <textarea formControlName="arabicShort" class="form-control mb-3" rows="10" placeholder="Please add sectors short/teaser Arabic"></textarea>
+                    <div *ngIf="isFieldInvalid('arabicShort')" class="text-danger">
+                        Arabic short description is required and cannot exceed 170 characters.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slogan -->
+    <div class="row mb-8">
+        <div class="col-lg-6 col-12">
+            <div class="d-flex flex-column fv-row">
+                <label class="d-flex align-items-center mb-2">
+                    <span class="text-gray-700 fs-6 fw-bolder required">English Slogan</span>
+                    <i class="fas fa-exclamation-circle ms-2 fs-7" ngbTooltip="Specify your sector's English Slogan within 5-10 words"></i>
+                </label>
+                <input type="text" class="form-control" formControlName="englishSlogan" placeholder="Sector English Slogan" />
+                <div *ngIf="isFieldInvalid('englishSlogan')" class="text-danger">
+                    English Slogan is required and cannot exceed 120 characters.
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-12">
+            <div class="d-flex flex-column fv-row">
+                <label class="d-flex align-items-center mb-2">
+                    <span class="text-gray-700 fs-6 fw-bolder required">Arabic Slogan</span>
+                    <i class="fas fa-exclamation-circle ms-2 fs-7" ngbTooltip="Specify your sector's Arabic Slogan within 5-10 words"></i>
+                </label>
+                <input type="text" class="form-control" formControlName="arabicSlogan" placeholder="Sector Arabic Slogan" />
+                <div *ngIf="isFieldInvalid('arabicSlogan')" class="text-danger">
+                    Arabic Slogan is required and cannot exceed 120 characters.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="mb-6">
+        <label class="d-flex align-items-center mb-2">
+            <span class="text-gray-700 fs-6 fw-bolder required">English sector content body</span>
+        </label>
+        <editor formControlName="englishContent" [init]="tinymceConfig"></editor>
+    </div>
+    
+    <div class="mb-6">
+        <label class="d-flex align-items-center mb-2">
+            <span class="text-gray-700 fs-6 fw-bolder required">Arabic sector content body</span>
+        </label>
+        <editor formControlName="arabicContent" [init]="tinymceConfig"></editor>
+    </div>
+    
+    <!-- New HWCH List Dropdown -->
+    <div class="row mb-8 pb-50" *ngIf="subservicesList && subservicesList.length>0">
+        <div class="col-6">
+            <div class="d-flex flex-column fv-row">
+                <label class="d-flex align-items-center mb-2">
+                    <span class="text-gray-700 fs-6 fw-bolder">HWCH List</span>
+                    <i class="fas fa-exclamation-circle ms-2 fs-7" ngbTooltip="Select one or more HWCH items"></i>
+                </label>
+                <ng-select
+                    class="custom-ng-select form-control"
+                    [items]="subservicesList"
+                    [multiple]="true"
+                    [searchable]="true"
+                    bindLabel="title"
+                    bindValue="id"
+                    placeholder="Select HWCH items"
+                    formControlName="HWCHList">
+                </ng-select>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="d-flex flex-column fv-row">
+                <label class="d-flex align-items-center mb-2">
+                    <span class="text-gray-700 fs-6 fw-bolder">Related Symbols</span>
+                    <i class="fas fa-exclamation-circle ms-2 fs-7" ngbTooltip="Select one or more related symbols"></i>
+                </label>
+                <ng-select
+                    class="custom-ng-select form-control"
+                    [items]="relatedOptions"
+                    [multiple]="true"
+                    [searchable]="true"
+                    placeholder="Select related symbols"
+                    formControlName="relatedSymbols">
+                </ng-select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Keywords field -->
+    <div class="row mb-8">
+        <div class="col-12">
+            <div class="d-flex flex-column fv-row">
+                <label class="d-flex align-items-center mb-2">
+                    <span class="text-gray-700 fs-6 fw-bolder required">Keywords (Arabic & English)</span>
+                    <i class="fas fa-exclamation-circle ms-2 fs-7" ngbTooltip="Add keywords related to this sector"></i>
+                </label>
+                <tag-input
+                    class="form-control"
+                    [formControlName]="'keywords'"
+                    [placeholder]="'+ Keyword'"
+                    [secondaryPlaceholder]="'Enter keywords'"
+                    [separatorKeyCodes]="[188, 13]"
+                    [addOnBlur]="true"
+                    [maxItems]="50"
+                    [theme]="'bootstrap'">
+                    <tag-input-dropdown
+                        [autocompleteItems]="['technology', 'innovation', 'sustainability', 'finance', 'healthcare']">
+                    </tag-input-dropdown>
+                </tag-input>
+                <div *ngIf="isFieldInvalid('keywords')" class="text-danger">
+                    Please add at least one keyword.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary" [disabled]="createSectorForm.invalid || (sectorsService.isLoading$ | async) || errorMessage">
+            <ng-container *ngIf="(sectorsService.isLoading$ | async) ===false">
+                <span class="indicator-label">{{ isEditMode ? 'Update' : 'Submit' }}</span>
+            </ng-container>
+            <ng-container *ngIf="sectorsService.isLoading$ | async">
+                <span class="indicator-progress" [style.display]="'block'">
+                    Please wait...
+                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+            </ng-container>
+        </button>
+    </div>
+</form>
