@@ -10,6 +10,10 @@ import { ReplyComponent } from "./pages/reply/reply.component";
 import { EmailsSettingsComponent } from "./pages/email-settings/emails-settings.component";
 import { AllSectorsComponent } from "./pages/main/all-sectors/all-sectors.component";
 import { CreateUpdateSectorComponent } from "./pages/main/create-sector/create-update-sector.component";
+import { AllServicesComponent } from "./pages/main/all-services/all-services.component";
+import { CreateServiceComponent } from "./pages/main/create-service/create-service.component";
+import { AllSubservicesComponent } from "./pages/main/all-subservices/all-subservices.component";
+import { CreateUpdateSubserviceComponent } from "./pages/main/create-subservice/create-subservice.component";
 
 const routes: Routes = [
   {
@@ -29,6 +33,12 @@ const routes: Routes = [
       {
         path: "services",
         component: SearchComponent,
+        children:[
+          {path :"", redirectTo:"all-services"  , pathMatch:"full"},
+          {path :"all-services",  component: AllServicesComponent},
+          {path :"create-service",  component: CreateServiceComponent},
+          {path :"edit-service/:id",  component: CreateServiceComponent}
+          ]
       },
       {
         path: "user-manage",
@@ -41,6 +51,12 @@ const routes: Routes = [
       {
         path: "subservices",
         component: TagComponent,
+        children:[
+          {path :"", redirectTo:"all-subservices"  , pathMatch:"full"},
+          {path :"all-subservices",  component: AllSubservicesComponent},
+          {path :"create-subservices",  component: CreateUpdateSubserviceComponent},
+          {path :"edit-subservices/:id",  component: CreateUpdateSubserviceComponent}
+          ]
       },
       {
         path: "ask",

@@ -1,0 +1,9 @@
+.image-preview{
+    margin: 10px 0px;
+    overflow: auto;
+    max-height: 300px;
+    border-radius: 10px;    
+    img{
+        border-radius: 10px;
+    }
+}

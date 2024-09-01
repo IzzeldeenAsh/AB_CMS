@@ -4,6 +4,7 @@
   <span class="text-gray-900 fw-bolder fs-1">
     Sectors
   </span>
+  <small class="text-muted fs-6 fw-bold ms-1" *ngIf="sectorsList && sectorsList.length>0"> ({{sectorsList.length}}) </small>
 </h1>
 
 <a routerLink="/apps/a-b-system/sectors/create-sector" class="btn me-5 btn-flex btn-sm btn-primary fw-bolder border-0 fs-6 h-40px"
@@ -16,38 +17,28 @@
   <div class="d-flex">
     <!--begin::Form control-->
     <input
-      type="text"
-      class="form-control flex-grow-1 me-5"
-      placeholder="Enter search query"
-      name="query"
-    />
-    <!--end::Form control-->
-
-    <!--begin::Submit-->
-  
-    <!--begin::Submit-->
+    type="text"
+    class="form-control flex-grow-1 me-5"
+    placeholder="Search by sector's name"
+    name="query"
+    [(ngModel)]="searchQuery"
+    (ngModelChange)="searchSectors()"
+  />
+ 
   </div>
 </form>
-<!--end:Search form-->
 
-<!--begin:Search info-->
-<!-- <div class="fw-bold fw-base text-gray-600" *ngIf="sectorsList && sectorsList.length >0 ">{{ sectorsList.length}} results found for keyword “Laravel”</div> -->
-<!--end:Search info-->
-
-<!--begin::Separator-->
-<!--end::Separator-->
-<!--begin::Questions-->
 <div class="mb-10 row" *ngIf="(isLoading$ | async) ===false">
-    <ng-container *ngFor="let sector of sectorsList">
+    <ng-container *ngFor="let sector of filteredSectorsList  ">
         <!--begin::Question-->
         <div class="col-lg-4 col-md-6 col-12">
             <div class="card mb-5 mb-xl-10">
             <div class="card-header align-items-center border-0">
                 <!--begin::Title-->
                <div class="d-flex justify-content-between w-100">
-                <h3 class="card-title fw-bolder text-gray-900 fs-3"> <a
-                    routerLink="/apps/tickets-system/user-manage"
-                    class="fs-2 fw-bolder text-gray-900 text-hover-primary me-1"
+                <h3  class="card-title fw-bolder text-gray-900 fs-3"> <a
+                  (click)="editSector(sector.id)"
+                    class="fs-2 fw-bolder text-gray-900 text-hover-warning cursor-pointer me-1"
                   >
                     {{ sector.title.english }}
                   </a>

@@ -24,6 +24,10 @@ import { EditorModule , TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { HttpClientModule } from "@angular/common/http";
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TagInputModule } from 'ngx-chips';
+import { AllServicesComponent } from "./pages/main/all-services/all-services.component";
+import { CreateServiceComponent } from "./pages/main/create-service/create-service.component";
+import { AllSubservicesComponent } from "./pages/main/all-subservices/all-subservices.component";
+import { CreateUpdateSubserviceComponent } from "./pages/main/create-subservice/create-subservice.component";
 @NgModule({
   declarations: [
     TicketsSystemComponent,
@@ -32,12 +36,16 @@ import { TagInputModule } from 'ngx-chips';
     SearchComponent,
     TagComponent,
     QuestionsComponent,
+    AllServicesComponent,
+    CreateServiceComponent,
     QuestionsListComponent,
     RepliesComponent,
     AllSectorsComponent,
     TextFormattingComponent,
     CreateUpdateSectorComponent,
     ReplyComponent,
+    CreateUpdateSubserviceComponent,
+    AllSubservicesComponent,
     EmailsSettingsComponent
   ],
   imports: [
