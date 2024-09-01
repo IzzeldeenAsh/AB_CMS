@@ -1,0 +1,74 @@
+<div class="d-flex justify-content-between mb-6">
+    <h1 class="text-gray-900 fw-bolder fs-1 d-flex align-items-center my-1">
+        <span class="text-gray-900 fw-bolder fs-1">
+            Subservices
+          </span>
+      <small class="text-muted fs-6 fw-bold ms-1" *ngIf="subservicesList && subservicesList.length>0"> ({{subservicesList.length}}) </small>
+    </h1>
+    <a
+      id="kt_toolbar_primary_button"
+      class="btn me-5 btn-flex btn-sm btn-primary fw-bolder border-0 fs-6 h-40px"
+      routerLink="/apps/a-b-system/subservices/create-subservices"
+    >
+      Create Subservice
+    </a>
+  </div>
+  <form id="kt_devs_search_form" class="form mb-6" action="">
+    <div class="d-flex">
+      <!--begin::Form control-->
+      <input
+      type="text"
+      class="form-control flex-grow-1 me-5"
+      placeholder="Search subservices..."
+      name="query"
+      [(ngModel)]="searchQuery"
+      (ngModelChange)="searchSubservices()"
+    />
+   
+    </div>
+  </form>
+
+  <div class="mb-10 row" *ngIf="(isLoading$ | async) === false">
+    <div class="col-lg-4 col-md-6 col-12" *ngFor="let subservice of filteredSubservicesList">
+      <div class="card mb-5 mb-xl-10">
+        <div class="card-header align-items-center border-0">
+          <div class="d-flex justify-content-between w-100">
+            <h3 class="card-title fw-bolder text-gray-900 fs-3">
+              <span
+                class="fs-2 fw-bolder text-gray-900 text-hover-warning cursor-pointer me-1"
+                (click)="editSubservice(subservice.id)"
+              >
+                {{ subservice.title.english }}
+              </span>
+            </h3>
+            <div class="d-flex flex-shrink-0">
+              <button
+                class="btn btn-icon btn-bg-light btn-color-success btn-sm me-1"
+                (click)="editSubservice(subservice.id)"
+              >
+                <span class="svg-icon svg-icon-3" [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"></span>
+              </button>
+              <button
+                class="btn btn-icon btn-bg-light btn-color-danger btn-sm"
+                (click)="deleteSubservice(subservice.id)"
+              >
+                <span
+                  class="svg-icon svg-icon-3"
+                  [inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"
+                ></span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body pt-0">
+          <div class="fs-base fw-normal text-gray-700 mb-4">
+            {{ subservice.contentHtml.english | truncate : 200 : true : "..." }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="(isLoading$ | async) === true" class="indicator-progress" style="display: block">
+    Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+  </div>

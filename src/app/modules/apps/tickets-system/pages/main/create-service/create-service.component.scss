@@ -1,0 +1,13 @@
+.required::after {
+    content: "*";
+    color: red;
+    margin-left: 4px;
+  }
+  
+  .form-label {
+    font-weight: bold;
+  }
+  
+  textarea {
+    resize: vertical;
+  }

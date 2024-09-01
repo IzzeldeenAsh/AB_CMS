@@ -3,7 +3,7 @@ import { paginationsList, Question, questionsList } from "../../../models";
 import { Observable, Subscription } from "rxjs";
 import { SectorsService } from "src/app/services/sectors/sectors.service";
 import { Router } from "@angular/router";
-
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-all-sectors',
@@ -17,6 +17,8 @@ export class AllSectorsComponent  implements OnInit, OnDestroy {
   isLoading$: Observable<boolean>;
   sectorsList :any;
   subservicesList:any;
+  filteredSectorsList:any;
+  searchQuery:string;
   constructor(private _sectors:SectorsService    ,
     private router:Router,
     private changeDetectorRef: ChangeDetectorRef) {
@@ -29,6 +31,16 @@ export class AllSectorsComponent  implements OnInit, OnDestroy {
     this.getAllSectors();
   
   }
+  searchSectors(): void {
+    if (!this.searchQuery.trim()) {
+      this.filteredSectorsList = this.sectorsList;
+    } else {
+      this.filteredSectorsList = this.sectorsList.filter((sector: any) =>
+        sector.title?.english?.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    }
+    this.changeDetectorRef.detectChanges();
+  }
 
   getAllSectors(){
   const sectorsSub =   this._sectors.getSectors().subscribe({
@@ -36,6 +48,7 @@ export class AllSectorsComponent  implements OnInit, OnDestroy {
       if(res.code === 1){
         if(res.results){
           this.sectorsList = res.results;
+          this.filteredSectorsList =this.sectorsList
           this.changeDetectorRef.detectChanges()
         }
       
@@ -57,7 +70,39 @@ export class AllSectorsComponent  implements OnInit, OnDestroy {
   }
 
   deleteSector(id:string){
-    
+    Swal.fire({
+      title: `Are you sure to delete this sector?`,
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+      const unsubfromDelet =  this._sectors.deleteSector(id).subscribe({
+        next : (res)=>{
+          Swal.fire({
+            icon: 'success',
+            title: '',
+            text: 'Sector deleted successfully.',
+            confirmButtonText: 'OK'
+          })
+          this.getAllSectors();
+        },
+        error : (err)=>{
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'An error occurred. Please try again.',
+          })
+        }
+      });
+
+      this.unsubscribe.push(unsubfromDelet)
+      }
+    });
+  
   }
 
 

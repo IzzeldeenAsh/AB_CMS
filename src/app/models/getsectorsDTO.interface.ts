@@ -15,7 +15,7 @@ export interface ISector {
   
   export interface SectorResponse {
     code: number;
-    results: ISector | null;
+    results: ISector[] | null;
     errorMessage?: string;
     error?: any;
   }

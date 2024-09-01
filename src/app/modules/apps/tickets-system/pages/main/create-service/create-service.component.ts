@@ -1,25 +1,26 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
-import { ActivatedRoute, Router } from "@angular/router";
-import { Subscription } from "rxjs";
-import { SubserviceService } from "src/app/services/subservice/subservice.service";
-import { SectorsService } from "src/app/services/sectors/sectors.service";
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { ServiceService } from 'src/app/services/service/service.service';
+import { SubserviceService } from 'src/app/services/subservice/subservice.service';
 import Swal from 'sweetalert2';
+
 @Component({
-  selector: "app-create-update-sector",
-  templateUrl: "./create-update-sector.component.html",
-  styleUrls: ["./create-update-sector.component.scss"],
+  selector: 'app-create-service',
+  templateUrl: './create-service.component.html',
+  styleUrl: './create-service.component.scss'
 })
-export class CreateUpdateSectorComponent implements OnInit, OnDestroy {
+export class CreateServiceComponent   implements OnInit, OnDestroy{
   private unsubscribe: Subscription[] = [];
   selectedFile: File | null = null;
   previewUrl: SafeUrl | null = null;
   isEditMode: boolean = false;
-  sectorId: string | null = null;
-  relatedOptions: any[] = ["T", "B", "C", "I"];
+  serviceId: string | null = null;
   subservicesList: any;
-  createSectorForm: FormGroup;
+  createServiceForm: FormGroup;
+  relatedOptions: any[] = ["T", "B", "C", "I"];
   errorMessage: string | null = null;
   tinymceConfig = {
     base_url: 'https://cdn.jsdelivr.net/npm/tinymce',
@@ -60,32 +61,32 @@ export class CreateUpdateSectorComponent implements OnInit, OnDestroy {
       });
     }
 };
-  
-  constructor(
-    private fb: FormBuilder,
-    public sectorsService: SectorsService,
-    private subserviceService: SubserviceService,
-    private sanitizer: DomSanitizer,
-    private changeDetectorRef: ChangeDetectorRef,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
 
+constructor(
+  private fb: FormBuilder,
+  public serviceService: ServiceService,
+  private subserviceService: SubserviceService,
+  private sanitizer: DomSanitizer,
+  private changeDetectorRef: ChangeDetectorRef,
+  private route: ActivatedRoute,
+  private router: Router
+){
+
+}
   ngOnInit(): void {
     this.initForm();
     this.getAllSubservices();
-
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.isEditMode = true;
-        this.sectorId = params['id'];
-        if(this.sectorId) this.loadSector(this.sectorId);
+        this.serviceId = params['id'];
+        if(this.serviceId) this.loadService(this.serviceId);
       }
     });
   }
 
   initForm() {
-    this.createSectorForm = this.fb.group({
+    this.createServiceForm = this.fb.group({
       englishTitle: ["", Validators.required],
       breadColor: ["light", Validators.required],
       arabicTitle: ["", Validators.required],
@@ -122,33 +123,33 @@ export class CreateUpdateSectorComponent implements OnInit, OnDestroy {
     this.unsubscribe.push(subservicesSub);
   }
 
-  loadSector(id: string) {
-    const sectorSub = this.sectorsService.getSectorById(id).subscribe({
+  loadService(id: string) {
+    const serviceSub = this.serviceService.getServiceById(id).subscribe({
       next: (res) => {
-        const sector  = res.results
-        console.log("sector",sector)
-        this.createSectorForm.patchValue({
-          englishTitle: sector.title.english,
-          arabicTitle: sector.title.arabic,
-          breadColor: sector.breadColor ? sector.breadColor : "light",
-          englishShort: sector.short.english,
-          arabicShort: sector.short.arabic,
-          englishSlogan: sector.description.title.english,
-          arabicSlogan: sector.description.title.arabic,
-          englishContent: sector.contentHTML.english,
-          arabicContent: sector.contentHTML.arabic,
-          HWCHList: sector.list.items,
-          relatedSymbols: sector.related,
-          keywords: sector.keywords.map((keyword: string) => ({ display: keyword, value: keyword }))
+        const service  = res.results
+        console.log("sector",service)
+        this.createServiceForm.patchValue({
+          englishTitle: service.title.english,
+          arabicTitle: service.title.arabic,
+          breadColor: service.breadColor ? service.breadColor : "light",
+          englishShort: service.short.english,
+          arabicShort: service.short.arabic,
+          englishSlogan: service.description.title.english,
+          arabicSlogan: service.description.title.arabic,
+          englishContent: service.contentHTML.english,
+          arabicContent: service.contentHTML.arabic,
+          HWCHList: service.list.items,
+          relatedSymbols: service.related,
+          keywords: service.keywords.map((keyword: string) => ({ display: keyword, value: keyword }))
         });
-        this.previewUrl = this.sanitizer.bypassSecurityTrustUrl(sector.imgURL);
+        this.previewUrl = this.sanitizer.bypassSecurityTrustUrl(service.imgURL);
         this.changeDetectorRef.detectChanges();
       },
       error: (error) => {
         console.error('Error loading sector', error);
       }
     });
-    this.unsubscribe.push(sectorSub);
+    this.unsubscribe.push(serviceSub);
   }
 
   onFileSelected(event: any) {
@@ -165,30 +166,27 @@ export class CreateUpdateSectorComponent implements OnInit, OnDestroy {
       this.previewUrl = this.sanitizer.bypassSecurityTrustUrl(objectUrl);
     }
   }
-
   clearSelectedFile() {
     this.selectedFile = null;
     this.previewUrl = null;
   }
-
   isFieldInvalid(fieldName: string): boolean {
-    const field = this.createSectorForm.get(fieldName);
+    const field = this.createServiceForm.get(fieldName);
     return !!field && field.invalid && (field.dirty || field.touched);
   }
-
   onSubmit() {
-    if (this.createSectorForm.valid) {
+    if (this.createServiceForm.valid) {
       const formData = new FormData();
-      const sectorData:any = this.prepareSectorObject();
-      console.log("sectorData",sectorData)
+      const serviceData:any = this.prepareSectorObject();
+      console.log("serviceData",serviceData)
       // Handle IDsymbol and breadColor separately
-      formData.append('IDsymbol', sectorData.IDsymbol);
-      formData.append('breadColor', sectorData.breadColor);
+      formData.append('IDsymbol', serviceData.IDsymbol);
+      formData.append('breadColor', serviceData.breadColor);
 
       // Handle other fields
-      Object.keys(sectorData).forEach(key => {
+      Object.keys(serviceData).forEach(key => {
         if (key !== 'IDsymbol' && key !== 'breadColor') {
-          formData.append(key, JSON.stringify(sectorData[key]));
+          formData.append(key, JSON.stringify(serviceData[key]));
         }
       });
 
@@ -197,8 +195,8 @@ export class CreateUpdateSectorComponent implements OnInit, OnDestroy {
       }
 
       const submission$ = this.isEditMode
-        ? this.sectorsService.updateSector(this.sectorId!, formData)
-        : this.sectorsService.createSector(formData);
+        ? this.serviceService.updateService(this.serviceId!, formData)
+        : this.serviceService.createService(formData);
 
       const submissionSub = submission$.subscribe({
         next: (response) => {
@@ -206,16 +204,16 @@ export class CreateUpdateSectorComponent implements OnInit, OnDestroy {
           Swal.fire({
             icon: 'success',
             title: 'Success!',
-            text: `Sector ${action} successfully.`,
+            text: `Service ${action} successfully.`,
             confirmButtonText: 'OK'
           }).then((result) => {
             if (result.isConfirmed) {
-              this.router.navigate(['/apps/a-b-system/sectors/all-sectors']);
+              this.router.navigate(['/apps/a-b-system/services/all-services']);
             }
           });
         },
         error: (error) => {
-          console.error(this.isEditMode ? 'Error updating sector' : 'Error creating sector', error);
+          console.error(this.isEditMode ? 'Error updating service' : 'Error creating service', error);
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
@@ -227,18 +225,18 @@ export class CreateUpdateSectorComponent implements OnInit, OnDestroy {
 
       this.unsubscribe.push(submissionSub);
     } else {
-      Object.keys(this.createSectorForm.controls).forEach(key => {
-        const control = this.createSectorForm.get(key);
+      Object.keys(this.createServiceForm.controls).forEach(key => {
+        const control = this.createServiceForm.get(key);
         control?.markAsTouched();
       });
     }
   }
 
   prepareSectorObject() {
-    const formValue = this.createSectorForm.value;
-    console.log("keywords" ,this.createSectorForm.get('keywords')?.value)
+    const formValue = this.createServiceForm.value;
+    console.log("keywords" ,this.createServiceForm.get('keywords')?.value)
     return {
-      IDsymbol: "Z1", // You might want to make this dynamic
+      IDsymbol: "Y1", // You might want to make this dynamic
       breadColor: formValue.breadColor,
       contentHTML: {
         arabic: formValue.arabicContent,
@@ -271,11 +269,7 @@ export class CreateUpdateSectorComponent implements OnInit, OnDestroy {
         }
       },
       list: {
-        title: {
-          arabic: "كيف يمكننا مساعدتك",
-          english: "How we can help"
-        },
-        items: formValue.HWCHList
+        items: formValue.HWCHList.map((id:string)=>({id : id}))
       },
       related: formValue.relatedSymbols,
       keywords: formValue.keywords.map((val: any) => val.value)
@@ -285,4 +279,5 @@ export class CreateUpdateSectorComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
   }
+
 }
