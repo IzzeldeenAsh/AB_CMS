@@ -26,12 +26,13 @@ export class CreateServiceComponent   implements OnInit, OnDestroy{
     base_url: 'https://cdn.jsdelivr.net/npm/tinymce',
     suffix: '.min',
     plugins: [
-      'image',
-      'textcolor',
-      'lists',
-      'link'  // Add the link plugin
+        'image',
+        'textcolor',
+        'lists',
+        'link',  // Add the link plugin
+        'directionality'  // Add the directionality plugin
     ],
-    toolbar: 'undo redo | bold | bullist numlist | forecolor | alignleft aligncenter alignright alignjustify | image | link',  // Add link to the toolbar
+    toolbar: 'undo redo | bold | bullist numlist | forecolor | alignleft aligncenter alignright alignjustify | ltr rtl | image | link',  // Add ltr and rtl buttons to the toolbar
     menubar: false,
     height: 500,
     image_title: true,
@@ -50,17 +51,8 @@ export class CreateServiceComponent   implements OnInit, OnDestroy{
     paste_strip_class_attributes: 'all',
     fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
     link_default_target: '_blank',  // Optional: sets default target for links to open in a new tab
-    extended_valid_elements: 'a[href|target|class]',
-    custom_elements: 'a',
-    formats: {
-      customLink: { selector: 'a', classes: 'hyper-link' }
-    },
-    setup: function (editor:any) {
-      editor.on('BeforeSetContent', function (e:any) {
-        e.content = e.content.replace(/<a /g, '<a class="hyper-link" ');
-      });
-    }
 };
+
 
 constructor(
   private fb: FormBuilder,
@@ -139,7 +131,7 @@ constructor(
           englishContent: service.contentHTML.english,
           arabicContent: service.contentHTML.arabic,
           HWCHList: service.list.items,
-          relatedSymbols: service.related,
+          relatedSymbols: service.related.split(','),
           keywords: service.keywords.map((keyword: string) => ({ display: keyword, value: keyword }))
         });
         this.previewUrl = this.sanitizer.bypassSecurityTrustUrl(service.imgURL);
@@ -182,10 +174,11 @@ constructor(
       // Handle IDsymbol and breadColor separately
       formData.append('IDsymbol', serviceData.IDsymbol);
       formData.append('breadColor', serviceData.breadColor);
+      formData.append('related', serviceData.related);
 
       // Handle other fields
       Object.keys(serviceData).forEach(key => {
-        if (key !== 'IDsymbol' && key !== 'breadColor') {
+        if (key !== 'IDsymbol' && key !== 'breadColor' && key !== 'related') {
           formData.append(key, JSON.stringify(serviceData[key]));
         }
       });
@@ -232,11 +225,14 @@ constructor(
     }
   }
 
+
+
   prepareSectorObject() {
     const formValue = this.createServiceForm.value;
     console.log("keywords" ,this.createServiceForm.get('keywords')?.value)
+    const date = new Date()
     return {
-      IDsymbol: "Y1", // You might want to make this dynamic
+      IDsymbol: `Y${date}`, // You might want to make this dynamic
       breadColor: formValue.breadColor,
       contentHTML: {
         arabic: formValue.arabicContent,
@@ -271,7 +267,7 @@ constructor(
       list: {
         items: formValue.HWCHList.map((id:string)=>({id : id}))
       },
-      related: formValue.relatedSymbols,
+      related: formValue.relatedSymbols.join(','),
       keywords: formValue.keywords.map((val: any) => val.value)
     };
   }

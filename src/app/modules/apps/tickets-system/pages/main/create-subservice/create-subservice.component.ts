@@ -29,12 +29,13 @@ export class CreateUpdateSubserviceComponent implements OnInit, OnDestroy {
     base_url: 'https://cdn.jsdelivr.net/npm/tinymce',
     suffix: '.min',
     plugins: [
-      'image',
-      'textcolor',
-      'lists',
-      'link'  // Add the link plugin
+        'image',
+        'textcolor',
+        'lists',
+        'link',  // Add the link plugin
+        'directionality'  // Add the directionality plugin
     ],
-    toolbar: 'undo redo | bold | bullist numlist | forecolor | alignleft aligncenter alignright alignjustify | image | link',  // Add link to the toolbar
+    toolbar: 'undo redo | bold | bullist numlist | forecolor | alignleft aligncenter alignright alignjustify | ltr rtl | image | link',  // Add ltr and rtl buttons to the toolbar
     menubar: false,
     height: 500,
     image_title: true,
@@ -53,18 +54,8 @@ export class CreateUpdateSubserviceComponent implements OnInit, OnDestroy {
     paste_strip_class_attributes: 'all',
     fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
     link_default_target: '_blank',  // Optional: sets default target for links to open in a new tab
-    extended_valid_elements: 'a[href|target|class]',
-    custom_elements: 'a',
-    formats: {
-      customLink: { selector: 'a', classes: 'hyper-link' }
-    },
-    setup: function (editor:any) {
-      editor.on('BeforeSetContent', function (e:any) {
-        e.content = e.content.replace(/<a /g, '<a class="hyper-link" ');
-      });
-    }
-};;
-  
+};
+
   constructor(
     private fb: FormBuilder,
     public subserviceService: SubserviceService,
@@ -179,7 +170,7 @@ export class CreateUpdateSubserviceComponent implements OnInit, OnDestroy {
           arabicSlogan: subservice.slogan.arabic,
           englishContent: subservice.contentHtml.english,
           arabicContent: subservice.contentHtml.arabic,
-          relatedSymbols: subservice.related,
+          relatedSymbols: subservice.related.split(','),
           keywords: subservice.keywords.map((keyword: string) => ({ display: keyword, value: keyword })),
           isPureSubsector: subservice.isPureSubsector,
           parentServiceField: subservice.service,
@@ -231,9 +222,16 @@ export class CreateUpdateSubserviceComponent implements OnInit, OnDestroy {
     if (this.createSubserviceForm.valid) {
       const formData = new FormData();
       const subserviceData:any = this.prepareSubserviceObject();
-      
+      formData.append('IDsymbol', subserviceData.IDsymbol);
+      formData.append('related', subserviceData.related);
+      formData.append('sector', subserviceData.sector);
+      formData.append('service', subserviceData.service);
+
       Object.keys(subserviceData).forEach(key => {
-        formData.append(key, JSON.stringify(subserviceData[key]));
+        if (key !== 'IDsymbol' && key !== 'related' && key !== 'service' && key !== 'sector') {
+          formData.append(key, JSON.stringify(subserviceData[key]));
+        }
+
       });
 
       if (this.selectedFile) {
@@ -280,8 +278,9 @@ export class CreateUpdateSubserviceComponent implements OnInit, OnDestroy {
 
   prepareSubserviceObject() {
     const formValue = this.createSubserviceForm.value;
+    const date = new Date()
     return {
-      IDsymbol: "Z1", // You might want to make this dynamic
+      IDsymbol: `S${date}`, // You might want to make this dynamic
       title: {
         arabic: formValue.arabicTitle,
         english: formValue.englishTitle
@@ -302,7 +301,7 @@ export class CreateUpdateSubserviceComponent implements OnInit, OnDestroy {
         arabic: formValue.arabicContent,
         english: formValue.englishContent
       },
-      related: formValue.relatedSymbols,
+      related: formValue.relatedSymbols.join(','),
       keywords: formValue.keywords.map((val: any) => val.value),
       isPureSubsector: formValue.isPureSubsector,
       sector: formValue.isPureSubsector ? formValue.parentSectorField  : null,
