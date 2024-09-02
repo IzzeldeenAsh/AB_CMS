@@ -25,12 +25,13 @@ export class CreateUpdateSectorComponent implements OnInit, OnDestroy {
     base_url: 'https://cdn.jsdelivr.net/npm/tinymce',
     suffix: '.min',
     plugins: [
-      'image',
-      'textcolor',
-      'lists',
-      'link'  // Add the link plugin
+        'image',
+        'textcolor',
+        'lists',
+        'link',  // Add the link plugin
+        'directionality'  // Add the directionality plugin
     ],
-    toolbar: 'undo redo | bold | bullist numlist | forecolor | alignleft aligncenter alignright alignjustify | image | link',  // Add link to the toolbar
+    toolbar: 'undo redo | bold | bullist numlist | forecolor | alignleft aligncenter alignright alignjustify | ltr rtl | image | link',  // Add ltr and rtl buttons to the toolbar
     menubar: false,
     height: 500,
     image_title: true,
@@ -49,17 +50,9 @@ export class CreateUpdateSectorComponent implements OnInit, OnDestroy {
     paste_strip_class_attributes: 'all',
     fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
     link_default_target: '_blank',  // Optional: sets default target for links to open in a new tab
-    extended_valid_elements: 'a[href|target|class]',
-    custom_elements: 'a',
-    formats: {
-      customLink: { selector: 'a', classes: 'hyper-link' }
-    },
-    setup: function (editor:any) {
-      editor.on('BeforeSetContent', function (e:any) {
-        e.content = e.content.replace(/<a /g, '<a class="hyper-link" ');
-      });
-    }
 };
+
+
   
   constructor(
     private fb: FormBuilder,
@@ -138,7 +131,7 @@ export class CreateUpdateSectorComponent implements OnInit, OnDestroy {
           englishContent: sector.contentHTML.english,
           arabicContent: sector.contentHTML.arabic,
           HWCHList: sector.list.items,
-          relatedSymbols: sector.related,
+          relatedSymbols: sector.related.split(','),
           keywords: sector.keywords.map((keyword: string) => ({ display: keyword, value: keyword }))
         });
         this.previewUrl = this.sanitizer.bypassSecurityTrustUrl(sector.imgURL);
@@ -184,10 +177,11 @@ export class CreateUpdateSectorComponent implements OnInit, OnDestroy {
       // Handle IDsymbol and breadColor separately
       formData.append('IDsymbol', sectorData.IDsymbol);
       formData.append('breadColor', sectorData.breadColor);
+      formData.append('related', sectorData.related);
 
       // Handle other fields
       Object.keys(sectorData).forEach(key => {
-        if (key !== 'IDsymbol' && key !== 'breadColor') {
+        if (key !== 'IDsymbol' && key !== 'breadColor' && key !== 'related') {
           formData.append(key, JSON.stringify(sectorData[key]));
         }
       });
@@ -237,8 +231,9 @@ export class CreateUpdateSectorComponent implements OnInit, OnDestroy {
   prepareSectorObject() {
     const formValue = this.createSectorForm.value;
     console.log("keywords" ,this.createSectorForm.get('keywords')?.value)
+    const date = new Date()
     return {
-      IDsymbol: "Z1", // You might want to make this dynamic
+      IDsymbol: `Z${date}`, // You might want to make this dynamic
       breadColor: formValue.breadColor,
       contentHTML: {
         arabic: formValue.arabicContent,
@@ -277,7 +272,7 @@ export class CreateUpdateSectorComponent implements OnInit, OnDestroy {
         },
         items: formValue.HWCHList
       },
-      related: formValue.relatedSymbols,
+      related: formValue.relatedSymbols.join(','),
       keywords: formValue.keywords.map((val: any) => val.value)
     };
   }
