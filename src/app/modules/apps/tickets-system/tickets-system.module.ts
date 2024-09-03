@@ -28,6 +28,7 @@ import { AllServicesComponent } from "./pages/main/all-services/all-services.com
 import { CreateServiceComponent } from "./pages/main/create-service/create-service.component";
 import { AllSubservicesComponent } from "./pages/main/all-subservices/all-subservices.component";
 import { CreateUpdateSubserviceComponent } from "./pages/main/create-subservice/create-subservice.component";
+import { HomePageComponent } from "./pages/main/home-page/home-page.component";
 @NgModule({
   declarations: [
     TicketsSystemComponent,
@@ -44,6 +45,7 @@ import { CreateUpdateSubserviceComponent } from "./pages/main/create-subservice/
     TextFormattingComponent,
     CreateUpdateSectorComponent,
     ReplyComponent,
+    HomePageComponent,
     CreateUpdateSubserviceComponent,
     AllSubservicesComponent,
     EmailsSettingsComponent

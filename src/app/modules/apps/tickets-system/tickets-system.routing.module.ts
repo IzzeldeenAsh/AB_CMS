@@ -14,6 +14,7 @@ import { AllServicesComponent } from "./pages/main/all-services/all-services.com
 import { CreateServiceComponent } from "./pages/main/create-service/create-service.component";
 import { AllSubservicesComponent } from "./pages/main/all-subservices/all-subservices.component";
 import { CreateUpdateSubserviceComponent } from "./pages/main/create-subservice/create-subservice.component";
+import { HomePageComponent } from "./pages/main/home-page/home-page.component";
 
 const routes: Routes = [
   {
@@ -44,6 +45,12 @@ const routes: Routes = [
         path: "user-manage",
         component: ReplyComponent,
       },
+      
+      {
+        path: "home-page",
+        component: HomePageComponent,
+      },
+
       {
         path: "emails-settings",
         component: EmailsSettingsComponent,

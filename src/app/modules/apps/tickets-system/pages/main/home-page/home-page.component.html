@@ -1,0 +1,389 @@
+<div class="d-flex justify-content-between mb-6">
+  <h1 class="d-flex align-items-center my-1">
+    <span class="text-gray-900 fw-bolder fs-1"> Home Page </span>
+  </h1>
+</div>
+
+<div class="row">
+  <div
+    class="mb-10 col-lg-4 col-md-6 col-12"
+    *ngIf="(isLoading$ | async) === false"
+  >
+    <div class="card mb-5 mb-xl-10">
+      <div class="card-header align-items-center border-0">
+        <!--begin::Title-->
+        <div class="d-flex justify-content-between w-100">
+          <h3 class="card-title fw-bolder text-gray-900 fs-3">
+            <a
+              (click)="editHero()"
+              class="fs-2 fw-bolder text-gray-900 text-hover-warning cursor-pointer me-1"
+            >
+              Hero
+            </a>
+          </h3>
+          <div class="d-flex flex-shrink-0">
+            <a
+              (click)="editHero()"
+              class="btn btn-icon btn-bg-light btn-color-success btn-sm me-1"
+            >
+              <span
+                [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                class="svg-icon svg-icon-3"
+              ></span>
+            </a>
+          </div>
+        </div>
+        <!--end::Title-->
+      </div>
+      <!--begin::Summary-->
+      <div class="card-body pt-0">
+        <!-- <div class="fs-base fw-normal text-gray-700 mb-4 ">
+                    {{ sector.contentHTML.english | truncate : 200 : true : "..." }}
+                  </div> -->
+      </div>
+
+      <!--end::Summary-->
+    </div>
+
+    <ng-container *ngIf="isLoading$ | async">
+      <span class="indicator-progress" [style.display]="'block'">
+        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+      </span>
+    </ng-container>
+  </div>
+
+  <div
+    class="mb-10 col-lg-4 col-md-6 col-12"
+    *ngIf="(isLoading$ | async) === false"
+  >
+    <div class="card mb-5 mb-xl-10">
+      <div class="card-header align-items-center border-0">
+        <!--begin::Title-->
+        <div class="d-flex justify-content-between w-100">
+          <h3 class="card-title fw-bolder text-gray-900 fs-3">
+            <a
+              (click)="editFeatured()"
+              class="fs-2 fw-bolder text-gray-900 text-hover-warning cursor-pointer me-1"
+            >
+              Featured
+            </a>
+          </h3>
+          <div class="d-flex flex-shrink-0">
+            <a
+              (click)="editFeatured()"
+              class="btn btn-icon btn-bg-light btn-color-success btn-sm me-1"
+            >
+              <span
+                [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                class="svg-icon svg-icon-3"
+              ></span>
+            </a>
+          </div>
+        </div>
+        <!--end::Title-->
+      </div>
+      <!--begin::Summary-->
+      <div class="card-body pt-0">
+        <!-- <div class="fs-base fw-normal text-gray-700 mb-4 ">
+                {{ sector.contentHTML.english | truncate : 200 : true : "..." }}
+              </div> -->
+      </div>
+
+      <!--end::Summary-->
+    </div>
+
+    <ng-container *ngIf="isLoading$ | async">
+      <span class="indicator-progress" [style.display]="'block'">
+        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+      </span>
+    </ng-container>
+  </div>
+
+  <div
+    class="mb-10 col-lg-4 col-md-6 col-12"
+    *ngIf="(isLoading$ | async) === false"
+  >
+    <div class="card mb-5 mb-xl-10">
+      <div class="card-header align-items-center border-0">
+        <!--begin::Title-->
+        <div class="d-flex justify-content-between w-100">
+          <h3 class="card-title fw-bolder text-gray-900 fs-3">
+            <a
+              (click)="editIndustrial()"
+              class="fs-2 fw-bolder text-gray-900 text-hover-warning cursor-pointer me-1"
+            >
+              Industrial Section
+            </a>
+          </h3>
+          <div class="d-flex flex-shrink-0">
+            <a
+              (click)="editIndustrial()"
+              class="btn btn-icon btn-bg-light btn-color-success btn-sm me-1"
+            >
+              <span
+                [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                class="svg-icon svg-icon-3"
+              ></span>
+            </a>
+          </div>
+        </div>
+        <!--end::Title-->
+      </div>
+      <!--begin::Summary-->
+      <div class="card-body pt-0">
+        <!-- <div class="fs-base fw-normal text-gray-700 mb-4 ">
+            {{ sector.contentHTML.english | truncate : 200 : true : "..." }}
+          </div> -->
+      </div>
+
+      <!--end::Summary-->
+    </div>
+
+    <ng-container *ngIf="isLoading$ | async">
+      <span class="indicator-progress" [style.display]="'block'">
+        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+      </span>
+    </ng-container>
+  </div>
+</div>
+
+<div class="row">
+  <div
+    class="mb-10 col-lg-4 col-md-6 col-12"
+    *ngIf="(isLoading$ | async) === false"
+  >
+    <div class="card mb-5 mb-xl-10">
+      <div class="card-header align-items-center border-0">
+        <!--begin::Title-->
+        <div class="d-flex justify-content-between w-100">
+          <h3 class="card-title fw-bolder text-gray-900 fs-3">
+            <a
+              (click)="editFeatured()"
+              class="fs-2 fw-bolder text-gray-900 text-hover-warning cursor-pointer me-1"
+            >
+              Grid Section
+            </a>
+          </h3>
+          <div class="d-flex flex-shrink-0">
+            <a
+              (click)="editFeatured()"
+              class="btn btn-icon btn-bg-light btn-color-success btn-sm me-1"
+            >
+              <span
+                [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                class="svg-icon svg-icon-3"
+              ></span>
+            </a>
+          </div>
+        </div>
+        <!--end::Title-->
+      </div>
+      <!--begin::Summary-->
+      <div class="card-body pt-0">
+        <!-- <div class="fs-base fw-normal text-gray-700 mb-4 ">
+                    {{ sector.contentHTML.english | truncate : 200 : true : "..." }}
+                  </div> -->
+      </div>
+
+      <!--end::Summary-->
+    </div>
+
+    <ng-container *ngIf="isLoading$ | async">
+      <span class="indicator-progress" [style.display]="'block'">
+        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+      </span>
+    </ng-container>
+  </div>
+
+  <div
+    class="mb-10 col-lg-4 col-md-6 col-12"
+    *ngIf="(isLoading$ | async) === false"
+  >
+    <div class="card mb-5 mb-xl-10">
+      <div class="card-header align-items-center border-0">
+        <!--begin::Title-->
+        <div class="d-flex justify-content-between w-100">
+          <h3 class="card-title fw-bolder text-gray-900 fs-3">
+            <a
+              (click)="editSuccessParnters()"
+              class="fs-2 fw-bolder text-gray-900 text-hover-warning cursor-pointer me-1"
+            >
+              Success Partners Section
+            </a>
+          </h3>
+          <div class="d-flex flex-shrink-0">
+            <a
+              (click)="editFeatured()"
+              class="btn btn-icon btn-bg-light btn-color-success btn-sm me-1"
+            >
+              <span
+                [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                class="svg-icon svg-icon-3"
+              ></span>
+            </a>
+          </div>
+        </div>
+        <!--end::Title-->
+      </div>
+      <!--begin::Summary-->
+      <div class="card-body pt-0">
+        <!-- <div class="fs-base fw-normal text-gray-700 mb-4 ">
+                    {{ sector.contentHTML.english | truncate : 200 : true : "..." }}
+                  </div> -->
+      </div>
+
+      <!--end::Summary-->
+    </div>
+
+    <ng-container *ngIf="isLoading$ | async">
+      <span class="indicator-progress" [style.display]="'block'">
+        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+      </span>
+    </ng-container>
+  </div>
+</div>
+<!--end::Questions-->
+<!--begin::Pagination-->
+<!-- <div class="d-flex flex-center mb-0">
+      <ng-container *ngFor="let page of paginations">
+        <ng-container *ngIf="page === '..'">
+          <span class="text-muted fw-bold fs-6 mx-2">..</span>
+        </ng-container>
+        <ng-container *ngIf="page !== '..'">
+          <a
+            class="btn btn-icon btn-light btn-active-light-primary h-30px w-30px fw-bold fs-6 mx-2"
+            [ngClass]="{ active: page === '2' }"
+            >{{ page }}</a
+          >
+        </ng-container>
+      </ng-container>
+    </div> -->
+<!--end::Questions-->
+<div class="row">
+    <div class=" col-sm-5 col-12">
+<div class="card card-xl-stretch mb-xl-8">
+<div class="card-header border-0 pt-5">
+    <h3 class="card-title align-items-start flex-column">
+      <span class="card-label fw-bolder fs-3 mb-1">Sections</span>
+    </h3>
+</div>
+
+<div class="card-body py-3">
+    
+            <div class="table-responsive">
+                <table class="table align-middle gs-0 gy-5">
+                  <thead>
+                    <tr>
+
+                      <th class="p-0 min-w-200px"></th>
+                      <th class="p-0 min-w-40px"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr>
+                   
+                      <td>
+                        <a (click)="editHero()" class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6">
+                          Hero </a>
+                      </td>
+                
+                      <td class="text-end">
+                          <a
+                          (click)="editHero()"
+                          class="btn btn-icon btn-bg-light btn-color-success btn-sm me-1"
+                        >
+                          <span
+                            [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                            class="svg-icon svg-icon-3"
+                          ></span>
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                     
+                      <td>
+                        <a (click)="editHero()" class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6">
+                          Featured </a>
+                      </td>
+                
+                      <td class="text-end">
+                          <a
+                          (click)="editHero()"
+                          class="btn btn-icon btn-bg-light btn-color-success btn-sm me-1"
+                        >
+                          <span
+                            [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                            class="svg-icon svg-icon-3"
+                          ></span>
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                     
+                      <td>
+                        <a (click)="editHero()" class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6">
+                          Industrial Services </a>
+                      </td>
+                
+                      <td class="text-end">
+                          <a
+                          (click)="editHero()"
+                          class="btn btn-icon btn-bg-light btn-color-success btn-sm me-1"
+                        >
+                          <span
+                            [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                            class="svg-icon svg-icon-3"
+                          ></span>
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                   
+                      <td>
+                        <a (click)="editHero()" class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6">
+                          Grid Services </a>
+                      </td>
+                
+                      <td class="text-end">
+                          <a
+                          (click)="editHero()"
+                          class="btn btn-icon btn-bg-light btn-color-success btn-sm me-1"
+                        >
+                          <span
+                            [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                            class="svg-icon svg-icon-3"
+                          ></span>
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                    
+                      <td>
+                        <a (click)="editHero()" class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6">
+                          Success Partners </a>
+                      </td>
+                
+                      <td class="text-end">
+                          <a
+                          (click)="editHero()"
+                          class="btn btn-icon btn-bg-light btn-color-success btn-sm me-1"
+                        >
+                          <span
+                            [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                            class="svg-icon svg-icon-3"
+                          ></span>
+                        </a>
+                      </td>
+                    </tr>
+          
+                  </tbody>
+                </table>
+        
+    </div>
+
+
+  </div>
+  </div>
+</div>
+</div>

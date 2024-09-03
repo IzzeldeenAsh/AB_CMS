@@ -11,14 +11,22 @@ import Swal from 'sweetalert2';
 export class EmailsSettingsComponent implements OnInit, OnDestroy {
   showChangeEmailFormSender: boolean = false;
   showChangeEmailFormRecipt: boolean = false;
+  showChangeEmailFormSenderApply: boolean = false;
+  showChangeEmailFormReciptApply: boolean = false;
   showChangePasswordForm: boolean = false;
   getEmailLoader: boolean = false;
+  getEmailLoaderApply: boolean = false;
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isLoading: boolean; 
+  isLoadingApply: boolean; 
   contactPageEmails:EmailSettings;
+  ApplyPageEmails:EmailSettings;
   private unsubscribe: Subscription[] = [];
   showPassword: boolean = false;
+  showPasswordApply: boolean = false;
   contactUSForm:FormGroup;
+  ApplyForAJobEmailsForm:FormGroup;
+  getApplyForAJobEmailLoader: boolean = false;
   constructor(
     private cdr: ChangeDetectorRef , 
     private emailSettigs:EmailSettingsService,
@@ -33,25 +41,41 @@ export class EmailsSettingsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initContactUsForm();
+    this.initContactUsFormApply();
     this.getEmails()
+    this.getEmailsApply()
   }
 
 
   initContactUsForm() {
     this.contactUSForm = this.fb.group({
-      smtpHost: ['', Validators.required],
-      smtpPort: ['', Validators.required],
-      smtpUser: ['', [Validators.required, Validators.email]],
-      smtpPass: ['', Validators.required],
-      recipientEmail: ['', [Validators.required, Validators.email]]
+      smtpHost: ['c1108390.sgvps.net', Validators.required],
+      smtpPort: ['465', Validators.required],
+      smtpUser: ['i.ashour@alokabconsulting.com', [Validators.required, Validators.email]],
+      smtpPass: ['IA@alokab2024&', Validators.required],
+      recipientEmail: ['izaldeen@outlook.sa'],
+      page:['contact']
+    });
+  }
+  initContactUsFormApply() {
+    this.ApplyForAJobEmailsForm = this.fb.group({
+      smtpHost: ['c1108390.sgvps.net', Validators.required],
+      smtpPort: ['465', Validators.required],
+      smtpUser: ['i.ashour@alokabconsulting.com', [Validators.required, Validators.email]],
+      smtpPass: ['IA@alokab2024&', Validators.required],
+      recipientEmail: ['izaldeen@outlook.sa'],
+      page:['applyForm']
     });
   }
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
+  togglePasswordVisibilityApply() {
+    this.showPassword = !this.showPassword;
+  }
   getEmails(){
     this.getEmailLoader = true;
-   const getEmails=  this.emailSettigs.getEmailSettings().subscribe({
+   const getEmails=  this.emailSettigs.getEmailSettings('contact').subscribe({
     next : (res)=>{
        this.contactPageEmails = res;
        this.contactUSForm.patchValue(this.contactPageEmails)
@@ -66,19 +90,49 @@ export class EmailsSettingsComponent implements OnInit, OnDestroy {
    });
 
    this.unsubscribe.push(getEmails)
-  }
 
+  this.contactPageEmails = this.contactUSForm.value;
+  this.cdr.detectChanges();
+  }
+  getEmailsApply(){
+    this.getEmailLoaderApply = true;
+   const getEmails=  this.emailSettigs.getEmailSettings('applyForm').subscribe({
+    next : (res)=>{
+       this.ApplyPageEmails = res;
+       this.ApplyForAJobEmailsForm.patchValue(this.ApplyPageEmails)
+       this.getEmailLoaderApply = false;
+       this.cdr.detectChanges();
+    },
+    error : (err)=>{
+      console.log("err" ,err );
+       this.getEmailLoaderApply = false;
+       this.cdr.detectChanges();
+    }
+   });
+
+   this.unsubscribe.push(getEmails)
+
+  this.ApplyPageEmails = this.ApplyForAJobEmailsForm.value;
+  this.cdr.detectChanges();
+  }
   toggleEmailFormSender(show: boolean) {
     this.showChangeEmailFormSender = show;
   }
   toggleEmailFormRecipt(show: boolean) {
     this.showChangeEmailFormRecipt = show;
   }
+  toggleEmailFormSenderApply(show: boolean) {
+    this.showChangeEmailFormSenderApply = show;
+  }
+  toggleEmailFormReciptApply(show: boolean) {
+    this.showChangeEmailFormReciptApply = show;
+  }
 
   saveEmail() {
     if( this.contactUSForm.valid){
       this.isLoading$.next(true);
       const updatedSettings:EmailSettings = this.contactUSForm.value;
+      
       console.log("updatedSettings",updatedSettings);
      const updateSub =  this.emailSettigs.updateEmailSettings(updatedSettings)
       .subscribe({
@@ -89,6 +143,41 @@ export class EmailsSettingsComponent implements OnInit, OnDestroy {
         },
         error: (err)=>{
           console.log("err" , err)
+          this.isLoading$.next(false);
+          this.getEmailsApply();
+        }
+      })
+      
+      this.unsubscribe.push(updateSub)
+    }else{
+      Swal.fire(
+        'Error!',
+        'There was an error updating emails.',
+        'error'
+      );
+    }
+
+  
+    // this.isLoading$.next(true);
+    // setTimeout(() => {
+    //   this.isLoading$.next(false);
+    //   this.showChangeEmailFormSender = false;
+    //   this.cdr.detectChanges();
+    // }, 1500);
+  }
+
+  
+  saveEmailApply() {
+    if( this.ApplyForAJobEmailsForm.valid){
+      this.isLoading$.next(true);
+      const updatedSettings:EmailSettings = this.ApplyForAJobEmailsForm.value;
+     const updateSub =  this.emailSettigs.updateEmailSettings(updatedSettings)
+      .subscribe({
+        next : (res)=>{
+          this.isLoading$.next(false);
+          this.getEmails()
+        },
+        error: (err)=>{
           this.isLoading$.next(false);
           this.getEmails();
         }
@@ -112,28 +201,8 @@ export class EmailsSettingsComponent implements OnInit, OnDestroy {
     // }, 1500);
   }
 
-  saveEmailRecipt() {
-    this.isLoading$.next(true);
-    setTimeout(() => {
-      this.isLoading$.next(false);
-      this.showChangeEmailFormRecipt = false;
-      this.cdr.detectChanges();
-    }, 1500);
-  }
 
 
-  togglePasswordForm(show: boolean) {
-    this.showChangePasswordForm = show;
-  }
-
-  savePassword() {
-    this.isLoading$.next(true);
-    setTimeout(() => {
-      this.isLoading$.next(false);
-      this.showChangePasswordForm = false;
-      this.cdr.detectChanges();
-    }, 1500);
-  }
 
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());

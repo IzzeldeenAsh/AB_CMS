@@ -19,7 +19,7 @@ export class CreateUpdateSubserviceComponent implements OnInit, OnDestroy {
   previewUrl: SafeUrl | null = null;
   isEditMode: boolean = false;
   subserviceId: string | null = null;
-  relatedOptions: any[] = ["T", "B", "C", "I"];
+  relatedOptions: any[] = ["T", "C", "I", "O" ,"E" , "A" , "P" , "R" , "H" , "V" , "G" ,"B", "L" ,"M" , "D"];
   createSubserviceForm: FormGroup;
   errorMessage: string | null = null;
   listOfSectors: any[] = [];
@@ -33,9 +33,11 @@ export class CreateUpdateSubserviceComponent implements OnInit, OnDestroy {
         'textcolor',
         'lists',
         'link',  // Add the link plugin
-        'directionality'  // Add the directionality plugin
+        'directionality',  // Add the directionality plugin
+        'table',  // Add the table plugin
+        'advtable'  // Add advanced table plugin for more table features
     ],
-    toolbar: 'undo redo | bold | bullist numlist | forecolor | alignleft aligncenter alignright alignjustify | ltr rtl | image | link',  // Add ltr and rtl buttons to the toolbar
+    toolbar: 'undo redo | bold | bullist numlist | forecolor | alignleft aligncenter alignright alignjustify | ltr rtl | image | link | table',  // Add table button to the toolbar
     menubar: false,
     height: 500,
     image_title: true,
@@ -54,7 +56,20 @@ export class CreateUpdateSubserviceComponent implements OnInit, OnDestroy {
     paste_strip_class_attributes: 'all',
     fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
     link_default_target: '_blank',  // Optional: sets default target for links to open in a new tab
+    table_default_attributes: {
+        border: '1'
+    },
+    table_default_styles: {
+        'border-collapse': 'collapse',
+        'border': '1px solid #ddd'
+    },
+    table_class_list: [
+        {title: 'None', value: ''},
+        {title: 'Table with borders', value: 'table-bordered'},
+    ],
 };
+
+
 
   constructor(
     private fb: FormBuilder,
@@ -87,10 +102,10 @@ export class CreateUpdateSubserviceComponent implements OnInit, OnDestroy {
     this.createSubserviceForm = this.fb.group({
       englishTitle: ["", Validators.required],
       arabicTitle: ["", Validators.required],
-      englishShort: ["", [Validators.required, Validators.maxLength(170)]],
-      arabicShort: ["", [Validators.required, Validators.maxLength(170)]],
-      englishSlogan: ["", [Validators.required, Validators.maxLength(120)]],
-      arabicSlogan: ["", [Validators.required, Validators.maxLength(120)]],
+      englishShort: ["", [Validators.required]],
+      arabicShort: ["", [Validators.required]],
+      englishSlogan: ["", [ Validators.maxLength(120)]],
+      arabicSlogan: ["", [ Validators.maxLength(120)]],
       englishContent: ["", Validators.required],
       arabicContent: ["", Validators.required],
       relatedSymbols: [[]],

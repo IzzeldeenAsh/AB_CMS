@@ -20,7 +20,7 @@ export class CreateServiceComponent   implements OnInit, OnDestroy{
   serviceId: string | null = null;
   subservicesList: any;
   createServiceForm: FormGroup;
-  relatedOptions: any[] = ["T", "B", "C", "I"];
+  relatedOptions: any[] = ["T", "C", "I", "O" ,"E" , "A" , "P" , "R" , "H" , "V" , "G" ,"B", "L" ,"M" , "D"];
   errorMessage: string | null = null;
   tinymceConfig = {
     base_url: 'https://cdn.jsdelivr.net/npm/tinymce',
@@ -82,8 +82,8 @@ constructor(
       englishTitle: ["", Validators.required],
       breadColor: ["light", Validators.required],
       arabicTitle: ["", Validators.required],
-      englishShort: ["", [Validators.required, Validators.maxLength(170)]],
-      arabicShort: ["", [Validators.required, Validators.maxLength(170)]],
+      englishShort: ["", [Validators.required]],
+      arabicShort: ["", [Validators.required]],
       englishSlogan: ["", [Validators.required, Validators.maxLength(120)]],
       arabicSlogan: ["", [Validators.required, Validators.maxLength(120)]],
       englishContent: ["", Validators.required],
@@ -229,7 +229,6 @@ constructor(
 
   prepareSectorObject() {
     const formValue = this.createServiceForm.value;
-    console.log("keywords" ,this.createServiceForm.get('keywords')?.value)
     const date = new Date()
     return {
       IDsymbol: `Y${date}`, // You might want to make this dynamic
@@ -265,7 +264,7 @@ constructor(
         }
       },
       list: {
-        items: formValue.HWCHList.map((id:string)=>({id : id}))
+        items: formValue.HWCHList
       },
       related: formValue.relatedSymbols.join(','),
       keywords: formValue.keywords.map((val: any) => val.value)

@@ -1,17 +1,18 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, finalize } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { environment } from 'src/environments/environment';
 
 export interface EmailSettings {
-  id:number,
+  id?: number;
   smtpHost: string;
-  smtpPort: string;
+  smtpPort: number;  // Changed to number
   smtpUser: string;
   smtpPass: string;
   recipientEmail: string;
-  updatedAt?:string;
+  updatedAt?: string;
+  page: string;  // New field
 }
 
 @Injectable({
@@ -21,15 +22,18 @@ export class EmailSettingsService {
   private getEmailSettingsApi = `${environment.NG_APP_BASE_URL}/api/email-settings`;
   private isLoadingSubject = new BehaviorSubject<boolean>(false);
   public isLoading$: Observable<boolean> = this.isLoadingSubject.asObservable();
+
   constructor(private http: HttpClient, private auth: AuthService) {}
 
-  getEmailSettings(): Observable<EmailSettings> {
+  getEmailSettings(page: string): Observable<EmailSettings> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.auth.getToken()}`
     });
 
-    return this.http.get<EmailSettings>(this.getEmailSettingsApi, { headers });
+    const params = new HttpParams().set('page', page);
+
+    return this.http.get<EmailSettings>(this.getEmailSettingsApi, { headers, params });
   }
 
   updateEmailSettings(settings: EmailSettings): Observable<EmailSettings> {
