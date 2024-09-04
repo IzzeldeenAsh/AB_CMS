@@ -31,6 +31,7 @@ export class ReplyComponent implements OnInit, OnDestroy {
   existedEmailError: string | null = null;
   isEditMode: boolean = false;
   editingUserId: string | null = null;
+  loading:boolean = false;
   @ViewChild('content') content: ElementRef;
   constructor(
     private fb: FormBuilder,
@@ -41,7 +42,7 @@ export class ReplyComponent implements OnInit, OnDestroy {
     private changeDetectorRef: ChangeDetectorRef,
     private sanitizer: DomSanitizer  // Add the sanitizer for image preview
   ) {
-    this.isLoading$ = this.authService.isLoading$;
+    this.isLoading$ = this.usersManagementService.isLoading$
   }
 
   ngOnInit(): void {
@@ -49,15 +50,19 @@ export class ReplyComponent implements OnInit, OnDestroy {
     this.loadUsers();
   }
   loadUsers(): void {
+    this.loading = true;
     const loadUsersSub = this.usersManagementService.getAllUsers().subscribe({
       next: (users: abUser[]) => {
         this.allUsersList = users
         const currentUser = this.authService.getUser();
         this.usersList = users.filter(user => user.email !== currentUser.email);
+        this.loading =false
         this.changeDetectorRef.detectChanges();
       },
       error: (err) => {
         console.error('Error loading users:', err);
+        this.loading =false;
+        this.changeDetectorRef.detectChanges();
         // Handle error (e.g., show error message to user)
       }
     });

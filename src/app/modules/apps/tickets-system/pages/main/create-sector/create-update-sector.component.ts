@@ -17,8 +17,8 @@ export class CreateUpdateSectorComponent implements OnInit, OnDestroy {
   previewUrl: SafeUrl | null = null;
   isEditMode: boolean = false;
   sectorId: string | null = null;
-  relatedOptions: any[] = ["T", "B", "C", "I"];
-  subservicesList: any;
+  relatedOptions: any[] = ["T", "C", "I", "O" ,"E" , "A" , "P" , "R" , "H" , "V" , "G" ,"B", "L" ,"M" , "D"];
+  subservicesList: any; 
   createSectorForm: FormGroup;
   errorMessage: string | null = null;
   tinymceConfig = {
@@ -82,8 +82,8 @@ export class CreateUpdateSectorComponent implements OnInit, OnDestroy {
       englishTitle: ["", Validators.required],
       breadColor: ["light", Validators.required],
       arabicTitle: ["", Validators.required],
-      englishShort: ["", [Validators.required, Validators.maxLength(170)]],
-      arabicShort: ["", [Validators.required, Validators.maxLength(170)]],
+      englishShort: ["", [Validators.required, Validators.maxLength(250)]],
+      arabicShort: ["", [Validators.required, Validators.maxLength(250)]],
       englishSlogan: ["", [Validators.required, Validators.maxLength(120)]],
       arabicSlogan: ["", [Validators.required, Validators.maxLength(120)]],
       englishContent: ["", Validators.required],
