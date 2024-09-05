@@ -90,7 +90,7 @@ export class CreateUpdateSectorComponent implements OnInit, OnDestroy {
       arabicContent: ["", Validators.required],
       HWCHList: [[], []],
       relatedSymbols: [[]],
-      keywords: [[], [Validators.required, Validators.minLength(1)]]
+      keywords: [[], [Validators.required]]
     });
   }
 

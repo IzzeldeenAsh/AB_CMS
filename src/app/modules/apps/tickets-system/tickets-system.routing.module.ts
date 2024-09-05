@@ -15,6 +15,7 @@ import { CreateServiceComponent } from "./pages/main/create-service/create-servi
 import { AllSubservicesComponent } from "./pages/main/all-subservices/all-subservices.component";
 import { CreateUpdateSubserviceComponent } from "./pages/main/create-subservice/create-subservice.component";
 import { HomePageComponent } from "./pages/main/home-page/home-page.component";
+import { HeroEditComponent } from "./pages/main/home-page/hero-edit/hero-edit.component";
 
 const routes: Routes = [
   {
@@ -50,7 +51,10 @@ const routes: Routes = [
         path: "home-page",
         component: HomePageComponent,
       },
-
+      {
+        path: "update-hero",
+        component: HeroEditComponent,
+      },
       {
         path: "emails-settings",
         component: EmailsSettingsComponent,
