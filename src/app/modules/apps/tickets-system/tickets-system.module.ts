@@ -29,6 +29,7 @@ import { CreateServiceComponent } from "./pages/main/create-service/create-servi
 import { AllSubservicesComponent } from "./pages/main/all-subservices/all-subservices.component";
 import { CreateUpdateSubserviceComponent } from "./pages/main/create-subservice/create-subservice.component";
 import { HomePageComponent } from "./pages/main/home-page/home-page.component";
+import { HeroEditComponent } from "./pages/main/home-page/hero-edit/hero-edit.component";
 @NgModule({
   declarations: [
     TicketsSystemComponent,
@@ -44,6 +45,7 @@ import { HomePageComponent } from "./pages/main/home-page/home-page.component";
     AllSectorsComponent,
     TextFormattingComponent,
     CreateUpdateSectorComponent,
+    HeroEditComponent,
     ReplyComponent,
     HomePageComponent,
     CreateUpdateSubserviceComponent,
