@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { abUser } from "src/app/modules/auth/models/abUser.model";
 import { AuthService } from "src/app/services/auth/auth.service";
 
@@ -10,6 +11,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
   user: abUser;
   constructor(
     private auth: AuthService,
+    private route:Router
   ) {}
 
   itemClass: string = "ms-1 ms-lg-2";
@@ -19,6 +21,10 @@ export class TopbarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.user = this.auth.getUser();
   
+  }
+  logout() {
+    this.auth.signOut();
+    this.route.navigate(["/auth/signin"])
   }
   ngOnDestroy(): void {
    

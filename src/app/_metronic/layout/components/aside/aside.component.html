@@ -3,7 +3,7 @@
   data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto"
   data-kt-scroll-dependencies="#kt_header" data-kt-scroll-wrappers="#kt_aside" data-kt-scroll-offset="5px">
   <!-- begin::Menu -->
-  <div class="menu menu-column menu-active-bg menu-hover-bg menu-title-gray-700 fs-6 menu-rounded w-100"
+  <div *ngIf="['SUPER ADMIN', 'DEVELOPER' , 'CONTENT'].includes(user.role)" class="menu menu-column menu-active-bg menu-hover-bg menu-title-gray-700 fs-6 menu-rounded w-100"
     id="#kt_aside_menu" data-kt-menu="true">
     <!--begin::Heading-->
     <div class="menu-item">
