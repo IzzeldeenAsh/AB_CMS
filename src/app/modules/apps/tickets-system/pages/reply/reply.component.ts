@@ -55,7 +55,7 @@ export class ReplyComponent implements OnInit, OnDestroy {
       next: (users: abUser[]) => {
         this.allUsersList = users
         const currentUser = this.authService.getUser();
-        this.usersList = users.filter(user => user.email !== currentUser.email);
+        this.usersList = users;
         this.loading =false
         this.changeDetectorRef.detectChanges();
       },

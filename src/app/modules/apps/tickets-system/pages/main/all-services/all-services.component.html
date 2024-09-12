@@ -52,7 +52,7 @@
         </div>
         <div class="card-body pt-0">
           <div class="fs-base fw-normal text-gray-700 mb-4">
-            {{ service.contentHTML.english | truncate : 200 : true : "..." }}
+            {{ service.description.title.english | truncate : 200 : true : "..." }}
           </div>
           <!-- <img [src]="service.imgURL" alt="{{ service.title.english }}" class="img-fluid mb-3" /> -->
           <div class="d-flex justify-content-between align-items-center">

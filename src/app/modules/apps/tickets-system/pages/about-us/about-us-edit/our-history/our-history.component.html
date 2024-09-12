@@ -1,0 +1,104 @@
+<div class="d-flex flex-column mb-10">
+    <h1 class="d-flex align-items-center my-1">
+        <span class="text-gray-900 fw-bolder fs-1">Update Timeline</span>
+    </h1>
+</div>
+
+<div *ngIf="(timelineService.isLoading$ | async) === true" class="d-flex justify-content-center">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+<div *ngIf="timelineEntries.length > 0" class="d-flex justify-content-around">
+    <div *ngFor="let entry of timelineEntries" class="mb-5">
+        <h2>{{ entry.year }}</h2>
+        <button (click)="loadData(entry)" class="btn btn-sm btn-primary mb-3">Edit</button>
+    </div>
+</div>
+
+<form [formGroup]="timelineForm" (ngSubmit)="onSubmit()" class="form" *ngIf="timelineForm.get('year')?.value">
+    <input type="hidden" formControlName="id">
+
+    <div class="row mb-8">
+        <div class="col-12">
+            <div class="d-flex flex-column fv-row">
+                <label class="d-flex align-items-center mb-2">
+                    <span class="text-gray-700 fs-6 fw-bolder required">Year</span>
+                </label>
+                <input type="text" class="form-control" formControlName="year">
+                <div *ngIf="isFieldInvalid('year')" class="text-danger">
+                    Year is required.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-8">
+        <div class="col-lg-6 col-12">
+            <div class="d-flex flex-column fv-row">
+                <label class="d-flex align-items-center mb-2">
+                    <span class="text-gray-700 fs-6 fw-bolder required">English Title</span>
+                </label>
+                <input type="text" class="form-control" formControlName="titleEnglish">
+                <div *ngIf="isFieldInvalid('titleEnglish')" class="text-danger">
+                    English Title is required.
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-12">
+            <div class="d-flex flex-column fv-row">
+                <label class="d-flex align-items-center mb-2">
+                    <span class="text-gray-700 fs-6 fw-bolder required">Arabic Title</span>
+                </label>
+                <input type="text" class="form-control" formControlName="titleArabic">
+                <div *ngIf="isFieldInvalid('titleArabic')" class="text-danger">
+                    Arabic Title is required.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 col-12">
+            <div class="d-flex flex-column mb-8">
+                <label class="mb-2">
+                    <span class="text-gray-700 fs-6 fw-bolder required">Content (English)</span>
+                </label>
+                <div class="fv-row">
+                    <textarea formControlName="contentEnglish" class="form-control mb-3" rows="10" placeholder="Please add content in English"></textarea>
+                    <div *ngIf="isFieldInvalid('contentEnglish')" class="text-danger">
+                        English content is required.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-12">
+            <div class="d-flex flex-column">
+                <label class="mb-2">
+                    <span class="text-gray-700 fs-6 fw-bolder required">Content (Arabic)</span>
+                </label>
+                <div class="fv-row">
+                    <textarea formControlName="contentArabic" class="form-control mb-3" rows="10" placeholder="Please add content in Arabic"></textarea>
+                    <div *ngIf="isFieldInvalid('contentArabic')" class="text-danger">
+                        Arabic content is required.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary" [disabled]="timelineForm.invalid || (timelineService.isLoading$ | async)">
+            <ng-container *ngIf="(timelineService.isLoading$ | async) === false">
+                <span class="indicator-label">Submit</span>
+            </ng-container>
+            <ng-container *ngIf="timelineService.isLoading$ | async">
+                <span class="indicator-progress" [style.display]="'block'">
+                    Please wait...
+                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+            </ng-container>
+        </button>
+    </div>
+</form>
