@@ -1,0 +1,89 @@
+<div class="d-flex flex-column mb-10">
+    <h1 class="d-flex align-items-center my-1">
+        <span class="text-gray-900 fw-bolder fs-1">Update Partners</span>
+    </h1>
+   
+</div>
+
+
+<form [formGroup]="partnersForm" id="kt_devs_ask_form" (ngSubmit)="onSubmit()" class="form">
+
+    <!-- Slogan -->
+    <div class="row mb-8">
+     
+        <div class="col-lg-6 col-12">
+            <div class="d-flex flex-column fv-row">
+                <label class="d-flex align-items-center mb-2">
+                    <span class="text-gray-700 fs-6 fw-bolder required">English Title</span>
+            
+                </label>
+                <editor class="editor" formControlName="englishTitle" [init]="tinymceConfig"></editor>
+                <div *ngIf="isFieldInvalid('englishTitle')" class="text-danger">
+                    English Title is required .
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-12">
+            <div class="d-flex flex-column fv-row">
+                <label class="d-flex align-items-center mb-2">
+                    <span class="text-gray-700 fs-6 fw-bolder required">Arabic Title</span>
+                </label>
+                <editor formControlName="arabicTitle" [init]="tinymceConfig"></editor>
+                <div *ngIf="isFieldInvalid('arabicTitle')" class="text-danger">
+                    Arabic Title is required .
+                </div>
+            </div>
+        </div>
+    </div>
+
+       <!-- hero's Short -->
+       <div class="row">
+        <div class="col-lg-6 col-12">
+            <div class="d-flex flex-column mb-8">
+                <label class="mb-2">
+                    <span class="text-gray-700 fs-6 fw-bolder required">Subtext (English)</span>
+              
+                </label>
+                <div class="fv-row">
+                    <textarea formControlName="englishText" class="form-control mb-3" rows="10" placeholder="Please add sectors short/teaser English"></textarea>
+                    <div *ngIf="isFieldInvalid('englishText')" class="text-danger">
+                        English description is required and cannot exceed 170 characters.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-12">
+            <div class="d-flex flex-column">
+                <label class="mb-2">
+                    <span class="text-gray-700 fs-6 fw-bolder required">Subtext (Arabic)</span>
+                  
+                </label>
+                <div class="fv-row">
+                    <textarea formControlName="arabicText" class="form-control mb-3" rows="10" placeholder="Please add hero short/teaser Arabic"></textarea>
+                    <div *ngIf="isFieldInvalid('arabicText')" class="text-danger">
+                        Arabic description is required and cannot exceed 170 characters.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary" [disabled]="partnersForm.invalid || (_partnersService.isLoading$ | async) ">
+            <ng-container *ngIf="(_partnersService.isLoading$ | async) ===false">
+                <span class="indicator-label">Submit</span>
+            </ng-container>
+            <ng-container *ngIf="_partnersService.isLoading$ | async">
+                <span class="indicator-progress" [style.display]="'block'">
+                    Please wait...
+                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+            </ng-container>
+        </button>
+    </div>
+</form>
+
+<div *ngIf="(_partnersService.isLoading$ | async) === true" class="d-flex justify-content-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>

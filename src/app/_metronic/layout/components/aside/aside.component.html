@@ -3,7 +3,7 @@
   data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto"
   data-kt-scroll-dependencies="#kt_header" data-kt-scroll-wrappers="#kt_aside" data-kt-scroll-offset="5px">
   <!-- begin::Menu -->
-  <div class="menu menu-column menu-active-bg menu-hover-bg menu-title-gray-700 fs-6 menu-rounded w-100"
+  <div *ngIf="['SUPER ADMIN', 'DEVELOPER' , 'CONTENT'].includes(user.role)" class="menu menu-column menu-active-bg menu-hover-bg menu-title-gray-700 fs-6 menu-rounded w-100"
     id="#kt_aside_menu" data-kt-menu="true">
     <!--begin::Heading-->
     <div class="menu-item">
@@ -18,7 +18,7 @@
     <!--begin::Menu item-->
     <div class="menu-item">
       <a routerLink="/apps/a-b-system/sectors" routerLinkActive="active" class="menu-link">
-        <span _ngcontent-ng-c3570875764="" class="menu-icon"><i class="ki-outline ki-tablet-text-up text-gray-700 fs-2"></i></span>
+        <span  class="menu-icon"><i class="ki-outline ki-tablet-text-up text-gray-700 fs-2"></i></span>
         <span class="menu-title">Sectors</span>
       </a>
     </div>
@@ -27,7 +27,7 @@
     <!--begin::Menu item-->
     <div class="menu-item">
       <a routerLink="/apps/a-b-system/services" routerLinkActive="active" class="menu-link">
-        <span _ngcontent-ng-c3570875764="" class="menu-icon"><i class="ki-outline ki-tablet-text-up text-gray-700 fs-2"></i></span>
+        <span  class="menu-icon"><i class="ki-outline ki-tablet-text-up text-gray-700 fs-2"></i></span>
         <span class="menu-title">Services</span>
       </a>
     </div>
@@ -36,15 +36,28 @@
     <!--begin::Menu item-->
     <div class="menu-item">
       <a routerLink="/apps/a-b-system/subservices" routerLinkActive="active" class="menu-link">
-        <span _ngcontent-ng-c3570875764="" class="menu-icon"><i class="ki-outline ki-tablet-text-up text-gray-700 fs-2"></i></span>
+        <span  class="menu-icon"><i class="ki-outline ki-tablet-text-up text-gray-700 fs-2"></i></span>
         <span class="menu-title">Sub Services</span>
       </a>
     </div>
     <!--end::Menu item-->
     <div class="menu-item">
       <a routerLink="/apps/a-b-system/home-page" routerLinkActive="active" class="menu-link">
-        <span _ngcontent-ng-c3570875764="" class="menu-icon"><i class="ki-outline ki-home text-gray-700 fs-2"></i></span>
+        <span  class="menu-icon"><i class="ki-outline ki-home text-gray-700 fs-2"></i></span>
         <span class="menu-title">Home Page</span>
+      </a>
+    </div>
+    <div class="menu-item">
+      <a routerLink="/apps/a-b-system/jobs" routerLinkActive="active" class="menu-link">
+        <span  class="menu-icon"><i class="ki-outline ki-badge text-gray-700 fs-2"></i></span>
+        <span class="menu-title">Jobs</span>
+      </a>
+    </div>
+  
+    <div class="menu-item">
+      <a routerLink="/apps/a-b-system/about-us" routerLinkActive="active" class="menu-link">
+        <span  class="menu-icon"><i class="ki-outline ki-user-square text-gray-700 fs-2"></i></span>
+        <span class="menu-title">About Us</span>
       </a>
     </div>
     <!--end::Menu item-->
@@ -68,13 +81,13 @@
     <!--begin::Menu item-->
     <div class="menu-item">
       <a routerLink="/apps/a-b-system/user-manage" routerLinkActive="active" class="menu-link">
-        <span _ngcontent-ng-c3570875764="" class="menu-icon"><i class="ki-outline ki-profile-user text-gray-700 fs-2"></i></span>
+        <span  class="menu-icon"><i class="ki-outline ki-profile-user text-gray-700 fs-2"></i></span>
         <span class="menu-title">Users Management</span>
       </a>
     </div>
     <div class="menu-item">
       <a routerLink="/apps/a-b-system/emails-settings" routerLinkActive="active" class="menu-link">
-        <span _ngcontent-ng-c3570875764="" class="menu-icon"><i class="ki-outline ki-messages text-gray-700 fs-2"></i></span>
+        <span  class="menu-icon"><i class="ki-outline ki-messages text-gray-700 fs-2"></i></span>
         <span class="menu-title">Emails Settings</span>
       </a>
     </div>

@@ -1,0 +1,80 @@
+<div class="d-flex justify-content-between mb-6">
+    <h1 class="text-gray-900 fw-bolder fs-1 d-flex align-items-center my-1">
+        <span class="text-gray-900 fw-bolder fs-1">
+            Jobs 
+          </span>
+      <small class="text-muted fs-6 fw-bold ms-1" *ngIf="jobsList && jobsList.length>0"> ({{jobsList.length}}) </small>
+    </h1>
+    <a
+      id="kt_toolbar_primary_button"
+      class="btn me-5 btn-flex btn-sm btn-primary fw-bolder border-0 fs-6 h-40px"
+      routerLink="/apps/a-b-system/jobs/create-update-vacancies"
+    >
+      Create Vacancies
+    </a>
+  </div>
+
+<ng-container *ngIf="(isLoading$ | async) === false">
+    <ng-container *ngIf="jobsList && jobsList.length > 0; else noData">
+      <div class="card mb-5 mb-xxl-8" *ngFor="let job of jobsList">
+        <div class="card-body pb-0">
+          <div class="d-flex align-items-center mb-5">
+            <div class="d-flex align-items-center flex-grow-1">
+              <div class="d-flex flex-column">
+                <a class="text-gray-900 text-hover-primary fs-6 fw-bold">{{job.title.english}}</a>
+                <span class="text-gray-500 fw-bold">{{job.interest.english}}</span>
+              </div>
+            </div>
+            
+            <div class="my-0">
+                <button
+                class="btn btn-icon btn-bg-light btn-color-success btn-sm me-1"
+                (click)="editJob(job.id)"
+              >
+                <span class="svg-icon svg-icon-3" [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"></span>
+              </button>
+              <button
+                class="btn btn-icon btn-bg-light btn-color-danger btn-sm"
+                (click)="deleteJob(job.id)"
+              >
+                <span
+                  class="svg-icon svg-icon-3"
+                  [inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"
+                ></span>
+              </button>
+              
+              <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px" data-kt-menu="true">
+                <!-- Menu content (unchanged) -->
+              </div>
+            </div>
+          </div>
+  
+          <div class="mb-5">
+            <p class="text-gray-800 fw-normal mb-5">
+              {{ job.description.english | truncate : 200 : true : "..." }}
+
+            </p>
+  
+            <div class="d-flex align-items-center mb-5">
+              <span *ngFor="let city of job.cities" class="btn btn-sm btn-light btn-color-muted btn-active-light-success px-4 py-2 me-4">
+                {{city.english }}
+              </span>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  
+    <ng-template #noData>
+      <div class="alert alert-info">No available jobs</div>
+    </ng-template>
+  </ng-container>
+  
+  <ng-container *ngIf="isLoading$ | async">
+    <div class="d-flex justify-content-center">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </ng-container>

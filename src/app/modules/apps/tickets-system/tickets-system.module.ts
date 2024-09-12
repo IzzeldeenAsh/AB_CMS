@@ -30,6 +30,17 @@ import { AllSubservicesComponent } from "./pages/main/all-subservices/all-subser
 import { CreateUpdateSubserviceComponent } from "./pages/main/create-subservice/create-subservice.component";
 import { HomePageComponent } from "./pages/main/home-page/home-page.component";
 import { HeroEditComponent } from "./pages/main/home-page/hero-edit/hero-edit.component";
+import { FeaturedEditComponent } from "./pages/main/home-page/featured-edit/featured-edit.component";
+import { HoverItemsEditComponent } from "./pages/main/home-page/hover-items-edit/hover-items-edit.component";
+import { GridEditComponent } from "./pages/main/home-page/grid-edit/grid-edit.component";
+import { PartnersEditComponent } from "./pages/main/home-page/partners-edit/partners-edit.component";
+import { VacanciesComponent } from "./pages/jobs/vacancies/vacancies.component";
+import { JobsComponent } from "./pages/jobs/jobs.component";
+import { CreateUpdateVacanciesComponent } from "./pages/jobs/create-update-vacancies/create-update-vacancies.component";
+import { OurCompanyComponent } from "./pages/about-us/about-us-edit/our-company/our-company.component";
+import { AboutUsEditComponent } from "./pages/about-us/about-us-edit/about-us-edit.component";
+import { OurHistoryComponent } from "./pages/about-us/about-us-edit/our-history/our-history.component";
+import { AboutUsComponent } from "./pages/about-us/about-us.component";
 @NgModule({
   declarations: [
     TicketsSystemComponent,
@@ -38,15 +49,26 @@ import { HeroEditComponent } from "./pages/main/home-page/hero-edit/hero-edit.co
     SearchComponent,
     TagComponent,
     QuestionsComponent,
+    VacanciesComponent,
+    JobsComponent,
     AllServicesComponent,
+    CreateUpdateVacanciesComponent,
     CreateServiceComponent,
     QuestionsListComponent,
     RepliesComponent,
+    HoverItemsEditComponent,
+    PartnersEditComponent,
+    GridEditComponent,
+    AboutUsComponent,
     AllSectorsComponent,
     TextFormattingComponent,
     CreateUpdateSectorComponent,
+    FeaturedEditComponent,
     HeroEditComponent,
     ReplyComponent,
+    AboutUsEditComponent,
+    OurCompanyComponent,
+    OurHistoryComponent,
     HomePageComponent,
     CreateUpdateSubserviceComponent,
     AllSubservicesComponent,

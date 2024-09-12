@@ -7,6 +7,7 @@ export const environment = {
   appVersion: 'v8.2.3',
   USERDATA_KEY: 'authf649fc9a5f55',
   isMockEnabled: true,
+  NG_APP_BASE_URL:"https://aandb-consulting.com",
   apiUrl: 'api',
   cloudinary: {
     cloudName: 'dpoam4vru',

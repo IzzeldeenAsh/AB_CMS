@@ -19,6 +19,37 @@ selectedFile: File | null = null;
 previewUrl: SafeUrl | null = null;
 hero:Hero ;
 isEditMode: boolean = false;
+tinymceConfig = {
+  base_url: 'https://cdn.jsdelivr.net/npm/tinymce',
+  suffix: '.min',
+  plugins: [
+      'image',
+      'textcolor',
+      'lists',
+      'link',  // Add the link plugin
+      'directionality'  // Add the directionality plugin
+  ],
+  toolbar: 'undo redo | bold | forecolor | alignleft aligncenter alignright alignjustify | ltr rtl ',  // Add ltr and rtl buttons to the toolbar
+  menubar: false,
+  height: 500,
+  image_title: true,
+  content_style: 'body { font-size: 22px; line-height: 140%; color:rgba(0,0,0,0.7) }',
+  image_advtab: true,
+  branding: false,
+  paste_data_images: false,
+  file_picker_types: 'image',
+  automatic_uploads: false,
+  image_uploadtab: false,
+  images_reuse_filename: false,
+  paste_as_text: true,
+  paste_remove_styles_if_webkit: true,
+  paste_remove_styles: true,
+  paste_remove_spans: true,
+  paste_strip_class_attributes: 'all',
+  fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
+  link_default_target: '_blank',  // Optional: sets default target for links to open in a new tab
+};
+
 constructor(
   private fb:FormBuilder,
   private sanitizer: DomSanitizer,
@@ -159,7 +190,23 @@ prepareHeroObject(){
         english :formValue.heroEnglishDescription
       }
     }
-  }else{
+  }else if(this.previewUrl){
+    return {
+      heroSlogan : {
+        arabic : formValue.heroArabicSlogan,
+        english :formValue.heroEnglishSlogan
+      },
+      heroTitle :{
+        arabic : formValue.heroArabicTitle,
+        english :formValue.heroEnglishTitle
+      },
+      heroDescription :{
+        arabic : formValue.heroArabicDescription,
+        english :formValue.heroEnglishDescription
+      }
+    }
+  }
+  else{
     this.errorMessage = "Please Upload a picture"
   }
   

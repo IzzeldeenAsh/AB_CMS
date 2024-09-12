@@ -4,6 +4,7 @@ import { Observable, Subscription } from "rxjs";
 import { SectorsService } from "src/app/services/sectors/sectors.service";
 import { Router } from "@angular/router";
 import Swal from 'sweetalert2';
+import { abUser } from "src/app/modules/auth/models/abUser.model";
 
 @Component({
   selector: 'app-all-sectors',
@@ -14,6 +15,7 @@ export class AllSectorsComponent  implements OnInit, OnDestroy {
   questions: ReadonlyArray<Question> = [];
   paginations: ReadonlyArray<string> = [];
   private unsubscribe: Subscription[] = [];
+  user:abUser
   isLoading$: Observable<boolean>;
   sectorsList :any;
   subservicesList:any;

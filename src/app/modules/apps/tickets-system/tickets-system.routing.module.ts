@@ -16,6 +16,17 @@ import { AllSubservicesComponent } from "./pages/main/all-subservices/all-subser
 import { CreateUpdateSubserviceComponent } from "./pages/main/create-subservice/create-subservice.component";
 import { HomePageComponent } from "./pages/main/home-page/home-page.component";
 import { HeroEditComponent } from "./pages/main/home-page/hero-edit/hero-edit.component";
+import { FeaturedEditComponent } from "./pages/main/home-page/featured-edit/featured-edit.component";
+import { HoverItemsEditComponent } from "./pages/main/home-page/hover-items-edit/hover-items-edit.component";
+import { GridEditComponent } from "./pages/main/home-page/grid-edit/grid-edit.component";
+import { PartnersEditComponent } from "./pages/main/home-page/partners-edit/partners-edit.component";
+import { JobsComponent } from "./pages/jobs/jobs.component";
+import { VacanciesComponent } from "./pages/jobs/vacancies/vacancies.component";
+import { CreateUpdateVacanciesComponent } from "./pages/jobs/create-update-vacancies/create-update-vacancies.component";
+import { AboutUsEditComponent } from "./pages/about-us/about-us-edit/about-us-edit.component";
+import { OurCompanyComponent } from "./pages/about-us/about-us-edit/our-company/our-company.component";
+import { OurHistoryComponent } from "./pages/about-us/about-us-edit/our-history/our-history.component";
+import { AboutUsComponent } from "./pages/about-us/about-us.component";
 
 const routes: Routes = [
   {
@@ -43,6 +54,16 @@ const routes: Routes = [
           ]
       },
       {
+        path: "jobs",
+        component: JobsComponent,
+        children:[
+          {path :"", redirectTo:"vacancies"  , pathMatch:"full"},
+          {path :"vacancies",  component: VacanciesComponent},
+          {path: "create-update-vacancies" , component : CreateUpdateVacanciesComponent},
+          {path: "create-update-vacancies/:id" , component : CreateUpdateVacanciesComponent}
+          ]
+      },
+      {
         path: "user-manage",
         component: ReplyComponent,
       },
@@ -54,6 +75,32 @@ const routes: Routes = [
       {
         path: "update-hero",
         component: HeroEditComponent,
+      },
+      {
+        path: "hover-items-edit",
+        component: HoverItemsEditComponent,
+      },
+      {
+        path: "about-us",
+        component: AboutUsComponent,
+        children:[
+          {path :"", redirectTo:"about-us-edit"  , pathMatch:"full"},
+          {  path: "about-us-edit",  component: AboutUsEditComponent},
+          {path :"our-company",  component: OurCompanyComponent},
+          {path :"our-history",  component: OurHistoryComponent},
+          ]
+      },
+      {
+        path: "partners-edit",
+        component: PartnersEditComponent,
+      },
+      {
+        path: "update-featured",
+        component: FeaturedEditComponent,
+      },
+      {
+        path: "update-grid",
+        component: GridEditComponent,
       },
       {
         path: "emails-settings",

@@ -5,30 +5,38 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.scss'
+  styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent {
-  constructor(private router:Router){
+  isLoading$: Observable<boolean>;
 
-  }
-  isLoading$:Observable<any>;
-  editHero(){
-  this.router.navigate(["/apps/a-b-system/update-hero"])
-  }
+  sections = [
+    { name: 'Hero', editFunction: () => this.editHero() },
+    { name: 'Featured', editFunction: () => this.editFeatured() },
+    { name: 'Industrial Services', editFunction: () => this.editIndustrial() },
+    { name: 'Grid Services', editFunction: () => this.editGrid() },
+    { name: 'Success Partners', editFunction: () => this.editSuccessParnters() }
+  ];
 
-  editFeatured(){
+  constructor(private router: Router) {}
 
-  }
-
-  editIndustrial(){
-
-  }
-
-  editGrid(){
-
+  editHero() {
+    this.router.navigate(["/apps/a-b-system/update-hero"]);
   }
 
-  editSuccessParnters(){
-    
+  editFeatured() {
+    this.router.navigate(["/apps/a-b-system/update-featured"]);
+  }
+
+  editIndustrial() {
+    this.router.navigate(["/apps/a-b-system/hover-items-edit"]);
+  }
+
+  editGrid() {
+    this.router.navigate(["/apps/a-b-system/update-grid"]);
+  }
+
+  editSuccessParnters() {
+    this.router.navigate(["/apps/a-b-system/partners-edit"]);
   }
 }

@@ -143,7 +143,7 @@
         <div class="text-danger">{{existedEmailError}}</div>
       </div>
 
-      <div class="fv-row mb-8 position-relative" *ngIf="!isEditMode">
+      <div class="fv-row mb-8 position-relative" >
         <label class="form-label fw-bolder text-gray-900 fs-6">Password</label>
         <input
           [type]="passwordFieldType"
@@ -161,9 +161,9 @@
         </button>
       </div>
       
-      <div class="fv-row mb-8">
+      <div class="fv-row mb-8" *ngIf="registrationForm.get('email')?.value !== 'cdo.alokab@gmail.com'">
         <label class="form-label fw-bolder text-gray-900 fs-6">Role</label>
-        <select class="form-control bg-transparent" formControlName="role">
+        <select class="form-control bg-transparent" formControlName="role"  [disabled]="registrationForm.get('email')?.value === 'cdo.alokab@gmail.com'">
           <option value="" disabled selected>Select Role</option>
           <option value="SUPER ADMIN">Super Admin</option>
           <option value="ADMIN">Admin</option>

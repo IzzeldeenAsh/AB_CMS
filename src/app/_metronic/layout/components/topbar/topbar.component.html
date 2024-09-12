@@ -55,7 +55,12 @@
   toggleBtnClass="{`btn-active-light-primary btn-custom ${btnClass}`}">
 </app-theme-mode-switcher>
 <!-- end::Theme mode -->
-
+<div class="d-flex align-items-center" [ngClass]="itemClass">
+  <div (click)="logout()" [ngClass]="btnClass" class="position-relative" data-kt-menu-trigger="click" data-kt-menu-attach="parent"
+  data-kt-menu-placement="bottom-end">
+  <i class="ki-duotone ki-exit-right text-gray-900 fs-2"><span class="path1"></span><span class="path2"></span></i>
+</div>
+</div>
 <!--begin::User-->
 <div class="d-flex align-items-center ms-lg-5" id="kt_header_user_menu_toggle">
   <!--begin::User info-->
