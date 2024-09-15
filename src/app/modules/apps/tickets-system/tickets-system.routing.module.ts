@@ -27,6 +27,7 @@ import { AboutUsEditComponent } from "./pages/about-us/about-us-edit/about-us-ed
 import { OurCompanyComponent } from "./pages/about-us/about-us-edit/our-company/our-company.component";
 import { OurHistoryComponent } from "./pages/about-us/about-us-edit/our-history/our-history.component";
 import { AboutUsComponent } from "./pages/about-us/about-us.component";
+import { LogosComponent } from "./pages/logos/logos.component";
 
 const routes: Routes = [
   {
@@ -79,6 +80,10 @@ const routes: Routes = [
       {
         path: "hover-items-edit",
         component: HoverItemsEditComponent,
+      },
+      {
+        path: "slider-logos",
+        component: LogosComponent,
       },
       {
         path: "about-us",

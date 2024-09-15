@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-between mb-6">
+    <h1 class="text-gray-900 fw-bolder fs-1 d-flex align-items-center my-1">
+      <span class="text-gray-900 fw-bolder fs-1">
+        Partners Logos
+      </span>
+      <small class="text-muted fs-6 fw-bold ms-1" *ngIf="logos && logos.length > 0"> ({{logos.length}}) </small>
+    </h1>
+    <a id="kt_toolbar_primary_button" class="btn me-5 btn-flex btn-sm btn-primary fw-bolder border-0 fs-6 h-40px"
+      (click)="openAddLogoModal()">
+      Add logo
+    </a>
+  </div>
+  
+  <div class="row">
+    <div class="col-12 col-md-4 col-lg-2" *ngFor="let logo of logos">
+      <div class="border border-dashed border-gray-300 rounded px-7 py-3 mb-6">                 
+        <div class="d-flex flex-stack mb-3">
+          <div class="me-3">            
+            <img [src]="logo.image" class="w-70px ms-n1 me-1" [alt]="logo.alt">                  
+          </div>
+          <div class="m-0">            
+            <button class="btn btn-icon btn-bg-light btn-color-danger btn-sm"
+                    (click)="deleteLogo(logo.id)">
+              <span class="svg-icon svg-icon-3" [inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #addLogoModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Add New Logo</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group mb-10">
+          <label for="logoImage">Logo Image (PNG only)</label>
+          <input type="file" class="form-control" id="logoImage" (change)="onFileSelected($event)" accept=".png" required>
+          <small class="text-danger" *ngIf="fileError">{{ fileError }}</small>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" 
+                [disabled]="isSubmitting || !newLogo.image || !newLogo.alt || !newLogo.link">
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isSubmitting"></span>
+          {{ isSubmitting ? 'Adding...' : 'Add Logo' }}
+        </button>
+      </form>
+    </div>
+  </ng-template>
