@@ -41,6 +41,7 @@ import { OurCompanyComponent } from "./pages/about-us/about-us-edit/our-company/
 import { AboutUsEditComponent } from "./pages/about-us/about-us-edit/about-us-edit.component";
 import { OurHistoryComponent } from "./pages/about-us/about-us-edit/our-history/our-history.component";
 import { AboutUsComponent } from "./pages/about-us/about-us.component";
+import { LogosComponent } from "./pages/logos/logos.component";
 @NgModule({
   declarations: [
     TicketsSystemComponent,
@@ -56,6 +57,7 @@ import { AboutUsComponent } from "./pages/about-us/about-us.component";
     CreateServiceComponent,
     QuestionsListComponent,
     RepliesComponent,
+    LogosComponent,
     HoverItemsEditComponent,
     PartnersEditComponent,
     GridEditComponent,
